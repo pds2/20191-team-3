@@ -7,7 +7,7 @@ class HealingItem
 {
 	private:
 		string _nome;//Potion, Elixir
-		int _HealPts;//Quanto ele regenera
+		int _heal_pts;//Quanto ele regenera
 	public:
 		HealingItem(string nome);//Construtor
 		virtual void exibir_status();//Exibe status para o jogador

@@ -7,12 +7,12 @@ HealingItem::HealingItem(string nome)//Construtor
 	if(nome=="Potion")//Caso o HealingItem seja Potion
 	{
 		_nome=nome;
-		_HealPts=10;
+		_heal_pts=10;
 	}
 	else if(nome=="Elixir")//Caso o HealingItem seja Elixir
 	{
 		_nome=nome;
-		_HealPts=20;
+		_heal_pts=20;
 	}
 }
 
