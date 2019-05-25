@@ -1,9 +1,8 @@
 #include <iostream>
-#include <ctime>
+#include <time.h>  
 
 #include "creature.h"
-
-
+#include "mapa.h"
 
 /*Esta classe controla o movimento do seu herói. 
 Você usa "W ", "A", "S" e "Z" para mover o seu personagem . 
@@ -12,12 +11,31 @@ entre eles , como mortes e posições.*/
 
 class CRolePlayingGame
 {
+     private:
+            bool LocateCreature(unsigned int& uirRow, unsigned int& uirCol, CCreature* qpCreature)
+            {
+                for (unsigned int uiRow = 0; uiRow < 10; + +uiRow) {
+                    for (unsigned int uiCol = 0; uiCol < 10; + +uiCol) {
+                        if (mqpaaCreatures[uiRow][uiCol] == qpCreature) {
+                            uirRow = uiRow;
+                            uirCol = uiCol;
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            CDungeon mqDungeon;
+            CCreature mqHero;
+            CCreature mqaMonsters[10];
+            CCreature* mqpaaCreatures[10][10];
     public:
         CRolePlayingGame()
         { 
         //Inicialize o número aleatório 
-            generatortime_t QTime , o tempo ( e QTime ); 
-            srand ( ( unsigned int ) QTime );
+            int QTime;
+            srand(time(NULL));
+            QTime = rand();
         //Inicializar o calabouço para ser empty
         for (unsigned int uiRow = 0; uiRow < 10; + + uiRow ) 
         {
@@ -28,22 +46,22 @@ class CRolePlayingGame
             }
         //Cria um heroi
         bool bFoundSpot = false; 
-        while ( bFoundSpot !) { 
+        while (!bFoundSpot) { 
             unsigned int uiRow = 1 + ( rand ()% 8); 
             unsigned int uiCol = 1 + ( rand ()% 8); 
             if ( QueryLocation ( uiRow , uiCol ) == ' ') {
-                bFoundSpot = true; mqpaaCreatures [ uiRow ] [ uiCol ] = &mqHero;
+                bFoundSpot = true;
+                mqpaaCreatures [ uiRow ] [ uiCol ] = &mqHero;
             }
         } 
         //Cria 10 monsters
         bFoundSpot = false;
         unsigned int uiMonster = 0;
-        while (bFoundSpot) {
+        while (!bFoundSpot) {
             unsigned int uiRow = 1 + (rand() % 8);
             unsigned int uiCol = 1 + (rand() % 8);
-            if (QueryLocation(uiRow, uiCol) == '') {
-                mqpaaCreatures[uiRow][uiCol] = &;
-                mqaMonsters[uiMonster];
+            if (QueryLocation(uiRow, uiCol) == ' ') {
+                mqpaaCreatures[uiRow][uiCol] = &mqaMonsters[uiMonster];
                 ++uiMonster;
                 if (uiMonster == 10) {
                     bFoundSpot = true;
@@ -53,7 +71,8 @@ class CRolePlayingGame
         }   
         char QueryLocation(unsigned int uiRow, unsigned int uiCol)
             {
-                for (unsigned int uIndex = 0; uIndex < 10, + + uIndex) {
+                for (unsigned int uIndex = 0; uIndex < 10; ++uIndex)
+                {
                     if (mqpaaCreatures[uiRow][uiCol] == &(mqaMonsters[uIndex])) {
                         return (char)('0 ' + uIndex);
                     }
@@ -74,22 +93,22 @@ class CRolePlayingGame
             unsigned int uiNextCol = uiHeroCol;
             switch (kcDirection) {
             case 'w':
-            case ' W': {
+            case 'W': {
                 -uiNextRow;
                 break;
             }
-            case ' s':
-            case ' s': {
-                + + uiNextCol;
+            case 'd':
+            case 'D': {
+                ++uiNextCol;
                 break;
             }
-            case ' z':
-            case ' Z': {
-                + + uiNextRow;
+            case 's':
+            case 'S': {
+                ++uiNextRow;
                 break;
             }
-            case ' a':
-            case ' a': {
+            case 'a':
+            case 'A': {
                 -uiNextCol;
                 break;
             }
@@ -97,14 +116,14 @@ class CRolePlayingGame
                 return false;
             }
             }
-            carbonizar cNextLoc = QueryLocation(uiNextRow, uiNextCol);
+            char cNextLoc = QueryLocation(uiNextRow, uiNextCol);
             if (cNextLoc == ' ') {
                 mqpaaCreatures[uiNextRow][uiNextCol] = &mqHero;
                 mqpaaCreatures[uiHeroRow][uiHeroCol] = 0;
                 return true;
             }
-            else if (cNextLoc > = '0 ' && cNextLoc < = '9') {
-                mqHero.Attack(mqaMonsters[(int)(cNextLoc - '0 ')]);
+            else if (cNextLoc >= '0' && cNextLoc <= '9') {
+                mqHero.Ataque(mqaMonsters[(int)(cNextLoc - '0')]);
                 return true;
             }
             else {
@@ -113,7 +132,6 @@ class CRolePlayingGame
         }
         void printboard()
         {
-            using namespace std;
             for (unsigned int uiRow = 0; uiRow < 10; + +uiRow) {
                 for (unsigned int uiCol = 0; uiCol < 10; + +uiCol) {
                     cout << QueryLocation(uiRow, uiCol);
@@ -125,11 +143,12 @@ class CRolePlayingGame
         void RemoveDeadMonsters()
         {
             for (unsigned int uiIndex = 0; uiIndex < 10; + +uiIndex) {
-                if (mqaMonsters[uiIndex] IsDead(.)) {
-                    int uiRow não assinado;
+                if (mqaMonsters[uiIndex].IsDead()) {
+                    unsigned int uiRow;
                     unsigned int uiCol;
                     if (LocateCreature(uiRow, uiCol, &(mqaMonsters[uiIndex]))) {
-                        mqpaaCreatures[uiRow][uiCol] = 0, std::cout << "Monster matou ! " << std::endl;
+                        mqpaaCreatures[uiRow][uiCol] = 0;
+                        std::cout << "Monstro matou ! " << std::endl;
                     }
                 }
             }
@@ -137,27 +156,10 @@ class CRolePlayingGame
         bool AllMonstersDead()
         {
             bool bAllDead = true;
-            for (unsigned int uiIndex = 0; uiIndex < 10; + +uiIndex) {
-                if ) { bAllDead = false; } ( mqaMonsters [ uiIndex ] IsDead ( ! ).
+            for (unsigned int uiIndex = 0; uiIndex < 10; ++uiIndex) {
+                if(!mqaMonsters[uiIndex].IsDead) 
+                 bAllDead = false; 
             }
             return bAllDead;
         }
-        private:
-            bool LocateCreature(unsigned int& uirRow, unsigned int& uirCol, CCreature* qpCreature)
-            {
-                for (unsigned int uiRow = 0; uiRow < 10; + +uiRow) {
-                    for (unsigned int uiCol = 0; uiCol < 10; + +uiCol) {
-                        if (mqpaaCreatures[uiRow][uiCol] == qpCreature) {
-                            uirRow = uiRow;
-                            uirCol = uiCol;
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-            CDungeon mqDungeon;
-            CCreature mqHero;
-            CCreature mqaMonsters[10];
-            CCreature* mqpaaCreatures[10][10];
     };
