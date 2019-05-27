@@ -15,7 +15,16 @@ class Arma
   		int _range_max;//alcance máximo da arma
 		
 	public:
+		Arma(string nome, string tipo, int att, int hit, int crit, int rmin, int rmax);//Construtor paramêtros resgatados de um txt
 		virtual void exibir_status();//Exibe status para o jogador
+	//Conjunto de métodos get para os atributos
+		string get_nome();
+		string get_tipo();
+		int get_attack();
+		int get_hit();
+		int get_crit();
+		int get_range_min();
+		int get_range_max();
 };
 
 #endif
