@@ -17,7 +17,6 @@ Personagem::Personagem(string Nome, int HP, int Strength, int Skill, int Speed, 
     _luck = Luck;
     _defense = Defense;
     _resistence = Resistence;
-    _armaequipada = -1; //Sem arma equipada
 
     /*Criando o iventario de Itens de cura*/
     HealingItem Potion("Potion");
@@ -34,37 +33,8 @@ void Personagem::Ataque()
 void Personagem::Usar_Item(HealingItem curativo)
 {
     _hpAtual += curativo.Heal_Pts();
-    if (_hpAtual > _hpmax) //Garantia que HP_Atual não seja maior que HP_Max
+    if (_hpAtual > _hpmax)
         _hpAtual = _hpmax;
-}
-
-int Personagem::Atk() //Atack = Strength + Arma(Attack)
-{
-    if (_armaequipada == -1)
-        return 0;
-    else
-        return _iventario_arma[_armaequipada].get_attack() + _strengh;
-}
-
-int Personagem::Crit() //Crit = (Skill / 2) + Arma(Crit)
-{
-    if (_armaequipada == -1)
-        return 0;
-    else
-        return _iventario_arma[_armaequipada].get_crit() + (_skill / 2);
-}
-
-int Personagem::Hit() //Hit = (Skill * 2) + (Luck / 2) + Arma(Hit)
-{
-    if (_armaequipada == -1)
-        return 0;
-    else
-        return _iventario_arma[_armaequipada].get_hit() + (_skill * 2) + (_luck / 2);
-}
-
-int Personagem::Avo() //Avoid = (Speed * 2) + Luck
-{
-    return (_speed * 2) + _luck;
 }
 
 string Personagem::get_nome() const
