@@ -15,7 +15,7 @@ o dano do ataque e os restantes pontos atingidos . */
     muiDefense = 0; 
     muiHitPoints = 3;
 
-    for (unsigned int uiIndex = 0; uiIndex < 3; + +uiIndex) {
+    for (unsigned int uiIndex = 0; uiIndex < 3; ++uiIndex) {
         muiAttack = muiAttack + (rand() % 34);
         muiDefense = muiDefense + (rand() % 34);
         muiHitPoints = muiHitPoints + (rand() % 10);
@@ -34,22 +34,19 @@ void CCreature::Ataque(CCreature &qrDefender){
     // linha original 
     // if (uiAttack1 < muiAttack && uiDefense1 && qrDefender ? " monstro perde" - muiDefense ) {
 
-    if (uiAttack1 < muiAttack){
-        cout << " monstro perde";
-    }else if{
-        muiDefense;
-        qrDefender.muiHitPoints;
-        std::cout << " monstro Hit" << std::endl;
+    if ( uiAttack1 > qrDefender.muiAttack && uiDefense1 < qrDefender.muiDefense) {
+     muiHitPoints++;
+     std::cout << " monstro Hit" << std::endl;
     }
-    else if{
-        std::cout << ";" << std::endl;
+    else {
+     std::cout << "monstro Perde" << std::endl;
     } //Verifique se o monstro acertar seu herói
 
-    if (uiAttack2 < qrDefender.muiAttack && uiDefense1 > muiDefense) {
-        -muiHitPoints;
-        std::cout << " , herói Hit " << std::endl;
+    if (uiAttack2 < qrDefender.muiAttack && uiDefense2 > qrDefender.muiDefense) {
+        qrDefender.muiHitPoints--;
+        std::cout << " Herói Hit " << std::endl;
     }else {
-        std::cout << " ! herói perde " << std::endl;
+        std::cout << " Herói perde " << std::endl;
     }
     
     std::cout <<  "Seus hitpoints: " << muiHitPoints << std::endl;
@@ -57,6 +54,11 @@ void CCreature::Ataque(CCreature &qrDefender){
 }
 
 //Verificar se Heroi morreu    
-bool CCreature::IsDead(){ 
-    return (muiHitPoints == 0); 
+bool CCreature::IsDead(){
+    if(muiHitPoints == 0){
+        return true;
+    } 
+    else{
+        return false;
+    } 
 }
