@@ -1,16 +1,21 @@
 #ifndef HEALINGITEM_H_
 #define HEALINGITEM_H_
+
 #include <string>
+#include "item.h"
+
 using namespace std;
 
-class HealingItem
+class HealingItem : public Item
 {
-	private:
-		string _nome;//Potion, Elixir
-		int _heal_pts;//Quanto ele regenera
-	public:
-		HealingItem(string nome);//Construtor
-		virtual void exibir_status();//Exibe status para o jogador
+  private:
+	string _nome;  //Potion, Elixir
+	int _heal_pts; //Quanto ele regenera
+
+  public:
+	HealingItem(string nome);			   //Construtor
+	virtual void exibir_status() override; //Exibe status para o jogador
+	int Heal_Pts();
 };
 
 #endif
