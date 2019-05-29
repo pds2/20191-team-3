@@ -39,6 +39,16 @@ int Mercenary::Avo() //Avoid = (Speed * 2) + Luck
     return (get_Spd() * 2) + get_Lck();
 }
 
+string Mercenary::get_Classe()
+{
+    return _classe;
+}
+
+int Mercenary::get_Move()
+{
+    return _move;
+}
+
 void Mercenary::Add_Arma(Arma arma)
 {
     if (_iventario_arma.size() >= 3)
@@ -51,8 +61,9 @@ void Mercenary::Add_Arma(Arma arma)
     {
         _iventario_arma.push_back(arma);
         if (_armaequipada == -1)
-            //Equipa a primeira arma
-            _armaequipada = 0;
+            if (arma.get_tipo() == "Sword") //Mercenarios so podem usar espadas
+                //Equipa a primeira arma
+                _armaequipada = 0;
     }
 }
 
@@ -60,7 +71,7 @@ void Mercenary::Mudar_Equip(Arma arma)
 {
     if (arma.get_tipo() != "Sword")
         return;
-        
+
     for (int i = 0; i < _iventario_arma.size(); i++)
         if (_iventario_arma[i].get_nome() == arma.get_nome())
         {
