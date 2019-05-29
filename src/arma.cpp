@@ -3,13 +3,13 @@
 using namespace std;
 
 //Construtor paramêtros resgatados de um txt
-Arma::Arma(string nome, string tipo, int att, int hit, int crit, int rmin, int rmax):
-_nome(nome), _tipo(tipo), _attack(att), _hit(hit), _crit(crit), _range_min(rmin), _range_max(rmax){}
+Arma::Arma(string nome, string tipo, int att, int hit, int crit, int rmin, int rmax) : _nome(nome), _tipo(tipo), _attack(att), _hit(hit), _crit(crit), _range_min(rmin), _range_max(rmax) {}
 
 //retorna string com todos os dados concatenados
 void Arma::exibir_status()
 {
-	
+	cout << _tipo << ": " << _nome << endl
+		 << "Atk: " << _attack << "/tHit: " << _hit << "/tCrit: " << _crit << endl;
 }
 
 //Métodos Get
