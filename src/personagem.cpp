@@ -34,7 +34,7 @@ void Personagem::Ataque()
 void Personagem::Usar_Item(HealingItem curativo)
 {
     _hpAtual += curativo.Heal_Pts();
-    if (_hpAtual > _hpmax)
+    if (_hpAtual > _hpmax) //Garantia que HP_Atual não seja maior que HP_Max
         _hpAtual = _hpmax;
 }
 
