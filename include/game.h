@@ -1,6 +1,6 @@
 #include <iostream>
 #include <time.h>  
-
+#include "mapa.h"
 #include "creature.h"
 
 /*Esta classe controla o movimento do seu herói. 

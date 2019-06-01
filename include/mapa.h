@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 
 //Crie uma nova classe que representa o seu " calabouço " como uma matriz bi- dimensional 

@@ -159,7 +159,7 @@ bool CRolePlayingGame::AllMonstersDead()
 {
     bool bAllDead = true;
     for (unsigned int uiIndex = 0; uiIndex < 10; ++uiIndex) {
-        if(!mqaMonsters[uiIndex].IsDead) 
+        if(!mqaMonsters[uiIndex].IsDead()) 
             bAllDead = false; 
     }
     return bAllDead;
