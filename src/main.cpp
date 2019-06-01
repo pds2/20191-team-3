@@ -16,7 +16,7 @@ int main()
     do {
         qGame.printboard(); //Pega o próximo e move
         char cMove;
-        cout << " Use W, A , S ou Z para mover : " << endl;
+        cout << " Use W, A , S ou D para mover : " << endl;
         std::cin >> cMove; //Verifique se o movimento é valido
         if (qGame.MoveHero(cMove)) { //Se o herói é morto
             if (qGame.HeroIsDead()) {

@@ -49,16 +49,17 @@ CRolePlayingGame::CRolePlayingGame()
             mqpaaCreatures [ uiRow ] [ uiCol ] = &mqHero;
         }
     } 
-    //Cria 3 monsters
+    //Cria 5 monsters
     bFoundSpot = false;
     unsigned int uiMonster = 0;
     while (!bFoundSpot) {
         unsigned int uiRow = 1 + (rand() % 9);
         unsigned int uiCol = 1 + (rand() % 9);
         if (QueryLocation(uiRow, uiCol) == '*') {
+            mqaMonsters[uiMonster] = CCreature();
             mqpaaCreatures[uiRow][uiCol] = &mqaMonsters[uiMonster];
             ++uiMonster;
-            if (uiMonster == 3) {
+            if (uiMonster == 5) {
                 bFoundSpot = true;
             }
         }
@@ -70,7 +71,7 @@ char CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
     for (unsigned int uIndex = 0; uIndex < 10; ++uIndex)
     {
         if (mqpaaCreatures[uiRow][uiCol] == &(mqaMonsters[uIndex])) {
-            return (char)('0 ' + uIndex);
+            return (char)('M');
         }
     }
     if (mqpaaCreatures[uiRow][uiCol] == &mqHero) {
@@ -113,19 +114,22 @@ bool CRolePlayingGame::MoveHero(char const kcDirection)
             return false;
         }
     }
+    
+    if (uiNextRow > 10 || uiNextCol > 10)
+        return false;
+
     char cNextLoc = QueryLocation(uiNextRow, uiNextCol);
-    if (cNextLoc == ' ') {
+    if (cNextLoc == '*') {
         mqpaaCreatures[uiNextRow][uiNextCol] = &mqHero;
         mqpaaCreatures[uiHeroRow][uiHeroCol] = 0;
         return true;
     }
-    else if (cNextLoc >= '0' && cNextLoc <= '9') {
-        mqHero.Ataque(mqaMonsters[(int)(cNextLoc - '0')]);
+    else if (cNextLoc == 'M') {
+        mqHero.Ataque(*mqpaaCreatures[uiNextRow][uiNextCol]);
         return true;
     }
-    else {
-        return false;
-    }
+
+    return false;
 }
 
 void CRolePlayingGame::printboard()
