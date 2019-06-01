@@ -1,0 +1,13 @@
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/ipch/8ca4c16965484a8a/MAIN.ipch
+.vscode/ipch/8ca4c16965484a8a/mmap_address.bin
+.vscode/ipch/8d5ec106c7dc219a/MAPA.ipch
+.vscode/ipch/8d5ec106c7dc219a/mmap_address.bin
+.vscode/ipch/97631e209f7a8a41/GAME.ipch
+.vscode/ipch/97631e209f7a8a41/mmap_address.bin
+.vscode/ipch/9795dbd2c62f71c2/CREATURE.ipch
+.vscode/ipch/9795dbd2c62f71c2/mmap_address.bin
+.vscode/ipch/578afd9d332a77ce/ARMA.ipch
+.vscode/ipch/578afd9d332a77ce/mmap_address.bin
+bin/main

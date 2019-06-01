@@ -1,9 +1,9 @@
 #include "mapa.h"
 
-//Crie uma nova classe que representa o seu " calabouço " como uma matriz bi- dimensional 
+//Crie uma nova classe que representa o seu " Dungeon (Masmorra) " como uma matriz bi- dimensional 
 
-
-CDungeon::CDungeon(){ //Criar uma mazechar vazio caaMaze 
+// Percorre o variavel criado adionando a mesma coisa as posições (Acho que não é necessario)
+CDungeon::CDungeon(){  
     for (unsigned int uiRow = 0; uiRow < 10; ++uiRow) {
         for (unsigned int uiCol = 0; uiCol < 10; ++uiCol) {
             mcaaMaze[uiRow][uiCol] = mcaaMaze[uiRow][uiCol];

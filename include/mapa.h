@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
 
-//Crie uma nova classe que representa o seu " calabouço " como uma matriz bi- dimensional 
+//Crie uma nova classe que representa o seu " Dungeon (Masmorra) " como uma matriz bi- dimensional 
 
 
 class CDungeon
 {
-    private:
+    private: // Cria uma matriz de char para a construcao do mapa
         char mcaaMaze[11][11] = {"**********",
                                 "**********",
                                 "**********",
@@ -19,5 +19,5 @@ class CDungeon
                                 "**********"};
     public:
         CDungeon();
-        char GetMazeSquare(unsigned int uiRow, unsigned int uiCol);
+        char GetMazeSquare(unsigned int uiRow, unsigned int uiCol); // Retorna a posição procurada no mapa
 };

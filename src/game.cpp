@@ -7,10 +7,9 @@
 
 /*Esta classe controla o movimento do seu herói. 
 Você usa "W ", "A", "S" e "Z" para mover o seu personagem . 
-Ele também gera 10 monstros e seu herói dentro de sua " masmorra " e controla as interações 
+Ele também gera 5 monstros e seu herói dentro de sua " Dungeon (Masmorra) " e controla as interações 
 entre eles , como mortes e posições.*/
 
-//Acha a localização de um monstro no mapa
 bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol, CCreature* qpCreature)
 {
     for (unsigned int uiRow = 0; uiRow < 10; ++uiRow) {
@@ -27,11 +26,7 @@ bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol
 
 CRolePlayingGame::CRolePlayingGame()
 { 
-    //Inicialize o número aleatório 
-    int QTime;
-    srand(time(NULL));
-    QTime = rand();
-    //Inicializar o mapa para ser empty
+    //Inicializar o mapa de objetos inicialmente vazio
     for (unsigned int uiRow = 0; uiRow < 10; ++uiRow ) 
     {
         for (unsigned int uiCol = 0; uiCol < 10; ++uiCol) 
@@ -39,7 +34,7 @@ CRolePlayingGame::CRolePlayingGame()
             mqpaaCreatures [ uiRow ] [ uiCol ] = 0 ;
         }
     }
-    //Cria um heroi
+    //Cria um heroi seta ele em uma posicao aleatoria no mapa 
     bool bFoundSpot = false; 
     while (!bFoundSpot) { 
         unsigned int uiRow = 1 + ( rand ()% 9); 
@@ -49,7 +44,7 @@ CRolePlayingGame::CRolePlayingGame()
             mqpaaCreatures [ uiRow ] [ uiCol ] = &mqHero;
         }
     } 
-    //Cria 5 monsters
+    //Cria 5 Monstros e seta ele em posiçoes aleatorias no mapa 
     bFoundSpot = false;
     unsigned int uiMonster = 0;
     while (!bFoundSpot) {
@@ -71,7 +66,7 @@ char CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
     for (unsigned int uIndex = 0; uIndex < 10; ++uIndex)
     {
         if (mqpaaCreatures[uiRow][uiCol] == &(mqaMonsters[uIndex])) {
-            return (char)('M');
+            return 'M';
         }
     }
     if (mqpaaCreatures[uiRow][uiCol] == &mqHero) {
@@ -114,10 +109,11 @@ bool CRolePlayingGame::MoveHero(char const kcDirection)
             return false;
         }
     }
-    
+    // Trata o tamanho do mapa diponivel em 10x10
     if (uiNextRow > 10 || uiNextCol > 10)
         return false;
-
+    
+    //Faz as iterações do personagem dependendo das instancias do mapa
     char cNextLoc = QueryLocation(uiNextRow, uiNextCol);
     if (cNextLoc == '*') {
         mqpaaCreatures[uiNextRow][uiNextCol] = &mqHero;
@@ -154,7 +150,7 @@ void CRolePlayingGame::RemoveDeadMonsters()
             unsigned int uiCol;
             if (LocateCreature(uiRow, uiCol, &(mqaMonsters[uiIndex]))) {
                 mqpaaCreatures[uiRow][uiCol] = 0;
-                std::cout << "Monstro matou ! " << std::endl;
+                std::cout << "Monstro morreu ! " << std::endl;
             }
         }
     }
