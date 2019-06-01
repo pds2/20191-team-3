@@ -15,7 +15,7 @@ class CRolePlayingGame
         CDungeon mqDungeon;
         CCreature mqHero;
         CCreature mqaMonsters[10];
-        CCreature* mqpaaCreatures[10][10];
+        CCreature* mqpaaCreatures[11][11];
     public:
         CRolePlayingGame();   
         char QueryLocation(unsigned int uiRow, unsigned int uiCol);

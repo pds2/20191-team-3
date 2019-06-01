@@ -42,23 +42,23 @@ CRolePlayingGame::CRolePlayingGame()
     //Cria um heroi
     bool bFoundSpot = false; 
     while (!bFoundSpot) { 
-        unsigned int uiRow = 1 + ( rand ()% 8); 
-        unsigned int uiCol = 1 + ( rand ()% 8); 
-        if ( QueryLocation ( uiRow , uiCol ) == ' ') {
+        unsigned int uiRow = 1 + ( rand ()% 9); 
+        unsigned int uiCol = 1 + ( rand ()% 9); 
+        if ( QueryLocation ( uiRow , uiCol ) == '*') {
             bFoundSpot = true;
             mqpaaCreatures [ uiRow ] [ uiCol ] = &mqHero;
         }
     } 
-    //Cria 10 monsters
+    //Cria 3 monsters
     bFoundSpot = false;
     unsigned int uiMonster = 0;
     while (!bFoundSpot) {
-        unsigned int uiRow = 1 + (rand() % 8);
-        unsigned int uiCol = 1 + (rand() % 8);
-        if (QueryLocation(uiRow, uiCol) == ' ') {
+        unsigned int uiRow = 1 + (rand() % 9);
+        unsigned int uiCol = 1 + (rand() % 9);
+        if (QueryLocation(uiRow, uiCol) == '*') {
             mqpaaCreatures[uiRow][uiCol] = &mqaMonsters[uiMonster];
             ++uiMonster;
-            if (uiMonster == 10) {
+            if (uiMonster == 3) {
                 bFoundSpot = true;
             }
         }
