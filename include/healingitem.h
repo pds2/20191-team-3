@@ -8,14 +8,14 @@ using namespace std;
 
 class HealingItem : public Item
 {
-  private:
+private:
 	string _nome;  //Potion, Elixir
 	int _heal_pts; //Quanto ele regenera
 
-  public:
-	HealingItem(string nome);			   //Construtor
-	virtual void exibir_status() override; //Exibe status para o jogador
-	int Heal_Pts();
+public:
+	HealingItem(string nome);					 //Construtor
+	virtual void exibir_status() const override; //Exibe status para o jogador
+	int Heal_Pts() const;
 };
 
 #endif

@@ -3,8 +3,8 @@
 
 class Item
 {
-	public:
-		virtual void exibir_status()=0;
+public:
+	virtual void exibir_status() const = 0;
 };
 
 #endif

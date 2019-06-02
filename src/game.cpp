@@ -10,6 +10,65 @@ Você usa "W ", "A", "S" e "Z" para mover o seu personagem .
 Ele também gera 5 monstros e seu herói dentro de sua " Dungeon (Masmorra) " e controla as interações 
 entre eles , como mortes e posições.*/
 
+CRolePlayingGame::CRolePlayingGame()
+{
+    //Cria um novo Objeto de MAPA 
+    Mapa map = Mapa("mapa_ch12.txt");
+    //Inicializar o mapa de objetos inicialmente vazio
+    CriaMapPersonagem(map.get_num_linhas(), map.get_num_colunas());
+    //map.imprime();
+    
+    
+    //Cria os personagens e setam eles em uma posicao aleatoria no mapa 
+    int num_linhas = map.get_num_linhas();
+    int num_colunas = map.get_num_colunas();
+    
+    map.cria_lista_personagens();
+    unsigned int uiHero = 0;
+    
+    bool bFoundSpot = false; 
+    while (!bFoundSpot) { 
+        unsigned int uiRow = 1 + ( rand ()% num_linhas); 
+        unsigned int uiCol = 1 + ( rand ()% num_colunas); 
+        if ( QueryLocation ( uiRow , uiCol ) == '*') {
+            Personagem P = map.get_personagem("Marcus");
+            bFoundSpot = true;
+            mqpaaCreatures[uiRow][uiCol] = &mqHero;
+            P.imprime_status();
+            P.imprime_iventario();
+        }
+    } 
+    //Cria 5 Monstros e seta ele em posiçoes aleatorias no mapa 
+    bFoundSpot = false;
+    unsigned int uiMonster = 0;
+    while (!bFoundSpot) {
+        unsigned int uiRow = 1 + (rand() % 9);
+        unsigned int uiCol = 1 + (rand() % 9);
+        if (QueryLocation(uiRow, uiCol) == '*') {
+            mqaMonsters[uiMonster] = Personagem();
+            mqpaaCreatures[uiRow][uiCol] = &mqaMonsters[uiMonster];
+            ++uiMonster;
+            if (uiMonster == 5) {
+                bFoundSpot = true;
+            }
+        }
+    }
+}   
+
+void CRolePlayingGame::CriaMapPersonagem(int num_linhas, int num_colunas){
+    
+     for (unsigned int uiRow = 0; uiRow < num_linhas; ++uiRow ) 
+    {
+        vector<Personagem> vetor;
+        for (unsigned int uiCol = 0; uiCol < num_colunas; ++uiCol) 
+        { 
+            Personagem p;
+            vetor.push_back(p);
+        }
+        mqpaaCreatures.push_back(vetor);
+    }
+};
+
 bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol, CCreature* qpCreature)
 {
     for (unsigned int uiRow = 0; uiRow < 10; ++uiRow) {
@@ -24,42 +83,7 @@ bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol
     return false;
 }
 
-CRolePlayingGame::CRolePlayingGame()
-{ 
-    //Inicializar o mapa de objetos inicialmente vazio
-    for (unsigned int uiRow = 0; uiRow < 10; ++uiRow ) 
-    {
-        for (unsigned int uiCol = 0; uiCol < 10; ++uiCol) 
-        { 
-            mqpaaCreatures [ uiRow ] [ uiCol ] = 0 ;
-        }
-    }
-    //Cria um heroi seta ele em uma posicao aleatoria no mapa 
-    bool bFoundSpot = false; 
-    while (!bFoundSpot) { 
-        unsigned int uiRow = 1 + ( rand ()% 9); 
-        unsigned int uiCol = 1 + ( rand ()% 9); 
-        if ( QueryLocation ( uiRow , uiCol ) == '*') {
-            bFoundSpot = true;
-            mqpaaCreatures [ uiRow ] [ uiCol ] = &mqHero;
-        }
-    } 
-    //Cria 5 Monstros e seta ele em posiçoes aleatorias no mapa 
-    bFoundSpot = false;
-    unsigned int uiMonster = 0;
-    while (!bFoundSpot) {
-        unsigned int uiRow = 1 + (rand() % 9);
-        unsigned int uiCol = 1 + (rand() % 9);
-        if (QueryLocation(uiRow, uiCol) == '*') {
-            mqaMonsters[uiMonster] = CCreature();
-            mqpaaCreatures[uiRow][uiCol] = &mqaMonsters[uiMonster];
-            ++uiMonster;
-            if (uiMonster == 5) {
-                bFoundSpot = true;
-            }
-        }
-    }
-}   
+
 
 char CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
 {

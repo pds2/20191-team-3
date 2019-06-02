@@ -17,7 +17,7 @@ HealingItem::HealingItem(string nome) //Construtor
 	}
 }
 
-void HealingItem::exibir_status()
+void HealingItem::exibir_status() const
 {
 	if (_nome == "Potion") //Mensagem caso Potion
 		cout << "Use este item para recuperar 10 pontos de HP" << endl;
@@ -25,6 +25,7 @@ void HealingItem::exibir_status()
 		cout << "Use este item para recuperar 20 pontos de HP" << endl;
 }
 
-int HealingItem::Heal_Pts(){
+int HealingItem::Heal_Pts() const
+{
 	return _heal_pts;
 }
