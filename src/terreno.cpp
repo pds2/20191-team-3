@@ -28,22 +28,6 @@ Terreno::Terreno(TipoTerreno terreno) {
     }
 }
 
-int Terreno::get_avoid() {
-    return _avoid;
-}
-
-int Terreno::get_defense() {
-    return _defense;
-}
-
-bool Terreno::get_ocupado() {
-    return _ocupado;
-}
-
-void Terreno::set_ocupacao(bool ocupacao) {
-    _ocupado = ocupacao;
-}
-
 Terreno::Terreno(char nome) //Construtor
 {
     _ocupado = false;
@@ -73,6 +57,24 @@ Terreno::Terreno(char nome) //Construtor
     }
 }
 
+int Terreno::get_avoid() {
+    return _avoid;
+}
+
+int Terreno::get_defense() {
+    return _defense;
+}
+
+bool Terreno::get_ocupado() {
+    return _ocupado;
+}
+
+void Terreno::set_ocupacao(bool ocupacao) {
+    _ocupado = ocupacao;
+}
+
+
+
 char Terreno::get_nome()
 {
     if (_ocupado == true)
@@ -87,16 +89,6 @@ char Terreno::get_nome()
         return '#';
     else
         return ' ';
-}
-
-int Terreno::get_avo()
-{
-    return _avoid;
-}
-
-int Terreno::get_def()
-{
-    return _defense;
 }
 
 bool Terreno::is_ocupado()

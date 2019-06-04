@@ -13,6 +13,7 @@ class Terreno {
         enum TipoTerreno { Plain, Forest, Mountain, Fort }; //enum que lista os possíveis terrenos
         Terreno(TipoTerreno terreno); //construtor que seta os valores baseado no terreno que está sendo instanciado
         Terreno(char nome);
+        Terreno();
         char get_nome();
         int get_avoid(); //getter que busca o valor da property _avoid
         int get_defense(); //getter que busca o valor da property _defense

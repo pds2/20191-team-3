@@ -1,8 +1,6 @@
 #include <iostream>
 #include <time.h>  
 
-#include "creature.h"
-#include "mapa.h"
 #include "game.h"
 
 /*Esta classe controla o movimento do seu herói. 
@@ -12,64 +10,61 @@ entre eles , como mortes e posições.*/
 
 CRolePlayingGame::CRolePlayingGame()
 {
-    //Cria um novo Objeto de MAPA 
-    Mapa map = Mapa("mapa_ch12.txt");
-    //Inicializar o mapa de objetos inicialmente vazio
-    CriaMapPersonagem(map.get_num_linhas(), map.get_num_colunas());
-    //map.imprime();
-    
-    
-    //Cria os personagens e setam eles em uma posicao aleatoria no mapa 
+    //Cria um objeto terreno vazio para realizar comparação e setar o personagem
+    Terreno TerraVazia;
+    TerraVazia.set_ocupacao(false);
+   
+    //Pega valor do tamanho de lihas e Colunas do Mapa 
     int num_linhas = map.get_num_linhas();
     int num_colunas = map.get_num_colunas();
     
+    //Não entendi essa função mas estava no codigo do Vinicius 
     map.cria_lista_personagens();
-    unsigned int uiHero = 0;
     
-    bool bFoundSpot = false; 
+    //Cria os personagens e setam eles em uma posicao aleatoria no mapa
+    bool bFoundSpot = false;
+    unsigned int uiHero = 0; 
     while (!bFoundSpot) { 
         unsigned int uiRow = 1 + ( rand ()% num_linhas); 
         unsigned int uiCol = 1 + ( rand ()% num_colunas); 
-        if ( QueryLocation ( uiRow , uiCol ) == '*') {
+    
+        Terreno Retorno; //Recebe valor de Retorno da função Query Location para saber se Terreno está 
+        Retorno = QueryLocation(uiRow,uiCol); //Ocupado ou não
+        if (Retorno == TerraVazia) { /*Não sei como compara classe com classe!!!!! */
             Personagem P = map.get_personagem("Marcus");
+            mqHero[uiHero] = P;
+            ++uiHero;
             bFoundSpot = true;
-            mqpaaCreatures[uiRow][uiCol] = &mqHero;
-            P.imprime_status();
-            P.imprime_iventario();
+            mqpaaCreatures[uiRow][uiCol] = &mqHero[uiHero];
+            if (uiHero == 5) {
+                bFoundSpot = true;
+            }
+            // P.imprime_status();
+            // P.imprime_iventario();
         }
     } 
     //Cria 5 Monstros e seta ele em posiçoes aleatorias no mapa 
     bFoundSpot = false;
     unsigned int uiMonster = 0;
     while (!bFoundSpot) {
-        unsigned int uiRow = 1 + (rand() % 9);
-        unsigned int uiCol = 1 + (rand() % 9);
-        if (QueryLocation(uiRow, uiCol) == '*') {
-            mqaMonsters[uiMonster] = Personagem();
+        unsigned int uiRow = 1 + (rand() % num_linhas);
+        unsigned int uiCol = 1 + (rand() % num_colunas);
+
+        Terreno Retorno; //Recebe valor de Retorno da função Query Location para saber se Terreno está 
+        Retorno = QueryLocation(uiRow,uiCol); //Ocupado ou não
+        if (Retorno == TerraVazia) { /*Não sei como compara classe com classe!!!!! */
+            Personagem M = map.get_personagem("Monstro/Vilão");
+            mqaMonsters[uiMonster] = M;
             mqpaaCreatures[uiRow][uiCol] = &mqaMonsters[uiMonster];
             ++uiMonster;
-            if (uiMonster == 5) {
+            if (uiMonster == 10) {
                 bFoundSpot = true;
             }
         }
     }
 }   
 
-void CRolePlayingGame::CriaMapPersonagem(int num_linhas, int num_colunas){
-    
-     for (unsigned int uiRow = 0; uiRow < num_linhas; ++uiRow ) 
-    {
-        vector<Personagem> vetor;
-        for (unsigned int uiCol = 0; uiCol < num_colunas; ++uiCol) 
-        { 
-            Personagem p;
-            vetor.push_back(p);
-        }
-        mqpaaCreatures.push_back(vetor);
-    }
-};
-
-bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol, CCreature* qpCreature)
+bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol, Personagem* qpCreature)
 {
     for (unsigned int uiRow = 0; uiRow < 10; ++uiRow) {
         for (unsigned int uiCol = 0; uiCol < 10; ++uiCol) {
@@ -85,21 +80,25 @@ bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol
 
 
 
-char CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
+Terreno CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
 {
+    Terreno t;
+    t.set_ocupacao(true);
     for (unsigned int uIndex = 0; uIndex < 10; ++uIndex)
     {
-        if (mqpaaCreatures[uiRow][uiCol] == &(mqaMonsters[uIndex])) {
-            return 'M';
+        if (mqpaaCreatures[uiRow][uiCol] == &mqaMonsters[uIndex]) {
+            return t;
         }
     }
-    if (mqpaaCreatures[uiRow][uiCol] == &mqHero) {
-        return 'H';
+    for (unsigned int uIndex = 0; uIndex < 10; ++uIndex){
+        if (mqpaaCreatures[uiRow][uiCol] == mqHero) {
+            return t;
+        }
     }
-    else {
-        return mqDungeon.GetMazeSquare(uiRow, uiCol);
-    }
+    return map.GetMazeSquare(uiRow, uiCol);
 }
+
+// PAREI DE IMPLEMENTAR ATÉ AQUI...
 
 bool CRolePlayingGame::MoveHero(char const kcDirection)
 {
