@@ -3,9 +3,9 @@
 
 #include "game.h"
 
-/*Esta classe controla o movimento do seu herói. 
+/*Esta classe controla o movimento dos seu heróis. 
 Você usa "W ", "A", "S" e "Z" para mover o seu personagem . 
-Ele também gera 5 monstros e seu herói dentro de sua " Dungeon (Masmorra) " e controla as interações 
+Ele também gera 10 monstros e seu heróis dentro de sua " Dungeon (Masmorra) " e controla as interações 
 entre eles , como mortes e posições.*/
 
 CRolePlayingGame::CRolePlayingGame()
@@ -43,7 +43,7 @@ CRolePlayingGame::CRolePlayingGame()
             // P.imprime_iventario();
         }
     } 
-    //Cria 5 Monstros e seta ele em posiçoes aleatorias no mapa 
+    //Cria 10 Monstros e seta ele em posiçoes aleatorias no mapa 
     bFoundSpot = false;
     unsigned int uiMonster = 0;
     while (!bFoundSpot) {
