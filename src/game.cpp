@@ -36,7 +36,6 @@ CRolePlayingGame::CRolePlayingGame()
             Personagem P = map.get_personagem("Marcus");
             mqHero[uiHero] = P;
             ++uiHero;
-            bFoundSpot = true;
             mqpaaCreatures[uiRow][uiCol] = &mqHero[uiHero];
             if (uiHero == 5) {
                 bFoundSpot = true;
@@ -140,16 +139,16 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, int numPersonagem)
     
     //Faz as iterações do personagem dependendo das instancias do mapa
     Terreno TerraVazia;
-    TerraVazia.set_ocupacao(false);
-    Terreno TerraOcupada;
-    TerraOcupada.set_ocupacao(true);
+    TerraVazia.set_tipo_ocupacao(0);
+    Terreno TerraOcupadaM;
+    TerraOcupadaM.set_tipo_ocupacao(2);
     Terreno cNextLoc = QueryLocation(uiNextRow, uiNextCol);
     if (TerrenoComparator(cNextLoc,TerraVazia)) {
         mqpaaCreatures[uiNextRow][uiNextCol] = &mqHero[numPersonagem];
         mqpaaCreatures[uiHeroRow][uiHeroCol] = 0;
         return true;
     }
-    else if (TerrenoComparator(cNextLoc,TerraVazia)) {
+    else if (TerrenoComparator(cNextLoc,TerraOcupadaM)) {
         mqHero[numPersonagem].Ataque(*mqpaaCreatures[uiNextRow][uiNextCol]);
         return true;
     }
@@ -167,23 +166,20 @@ void CRolePlayingGame::printboard()
                 cout << TerrenoPrint.get_nome() << endl;
             }
             if(TerrenoPrint.get_tipo_ocupado() == 1){
-                cout << mqpaaCreatures[uiRow][uiCol].get_Nome() << endl;
+                Personagem p = *mqpaaCreatures[uiRow][uiCol];
+                cout << p.get_Nome();
             }
             if(TerrenoPrint.get_tipo_ocupado() == 2){
-                cout << mqpaaCreatures[uiRow][uiCol].get_Nome() << endl;
+                Personagem p = *mqpaaCreatures[uiRow][uiCol];
+                cout << p.get_Nome();
             } 
         }
         cout << endl;
     }
 }
 
-bool CRolePlayingGame::AllHeroesIsDead() { 
-    bool bAllDead = true;
-    for (unsigned int uiIndex = 0; uiIndex < 5; ++uiIndex) {
-        if(!mqHero[uiIndex].IsDead()) 
-            bAllDead = false; 
-    }
-    return bAllDead;
+bool CRolePlayingGame::HeroIsDead(int numPersonagem) { 
+    return mqHero[numPersonagem].IsDead();
 }
 
 bool CRolePlayingGame::AllMonstersDead()
@@ -191,6 +187,16 @@ bool CRolePlayingGame::AllMonstersDead()
     bool bAllDead = true;
     for (unsigned int uiIndex = 0; uiIndex < 10; ++uiIndex) {
         if(!mqaMonsters[uiIndex].IsDead()) 
+            bAllDead = false; 
+    }
+    return bAllDead;
+}
+
+bool CRolePlayingGame::AllHeroesisDead()
+{
+    bool bAllDead = true;
+    for (unsigned int uiIndex = 0; uiIndex < 5; ++uiIndex) {
+        if(!mqHero[uiIndex].IsDead()) 
             bAllDead = false; 
     }
     return bAllDead;

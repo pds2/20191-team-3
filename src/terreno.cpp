@@ -1,6 +1,7 @@
 #include "terreno.h"
 
-Terreno::Terreno(TipoTerreno terreno) {
+Terreno::Terreno(TipoTerreno terreno)  //Construtor 
+{
     switch (terreno) {
         case TipoTerreno::Plain:
             _nome = "Plain";
@@ -59,6 +60,22 @@ Terreno::Terreno(char nome) //Construtor
 
 Terreno::Terreno(){}
 
+char Terreno::get_nome()
+{
+    if (_ocupado == true)
+        return 'x';
+    if (_nome == "Plain")
+        return '_';
+    else if (_nome == "Forest")
+        return 'F';
+    else if (_nome == "Mountain")
+        return 'M';
+    else if (_nome == "Fort")
+        return '#';
+    else
+        return ' ';
+}
+
 int Terreno::get_avoid() {
     return _avoid;
 }
@@ -85,28 +102,3 @@ void Terreno::set_tipo_ocupacao(int tipocupacao) {
 
 
 
-char Terreno::get_nome()
-{
-    if (_ocupado == true)
-        return 'x';
-    if (_nome == "Plain")
-        return '_';
-    else if (_nome == "Forest")
-        return 'F';
-    else if (_nome == "Mountain")
-        return 'M';
-    else if (_nome == "Fort")
-        return '#';
-    else
-        return ' ';
-}
-
-bool Terreno::is_ocupado()
-{
-    return _ocupado;
-}
-
-void Terreno::muda_ocupacao(bool ocupado)
-{
-    _ocupado = ocupado;
-}

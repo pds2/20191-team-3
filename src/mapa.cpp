@@ -105,8 +105,8 @@ void Mapa::cria_lista_personagens()
                 p->Add_Arma(a1);
                 p->Add_Arma(a2);
             }
-            _lista_personagens.insert(pair<string, Personagem *>(p->get_Nome(), p));
-            _grade[p->get_i()][p->get_j()].muda_ocupacao(true);
+            _lista_personagens.insert(pair<string, Personagem *>(p->get_nome(), p));
+            _grade[p->get_i()][p->get_j()].set_ocupacao(true);
         }
         infile.close();
     }

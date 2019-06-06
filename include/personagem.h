@@ -44,7 +44,8 @@ public:
 	Personagem();
 
 	//Conjunto de métodos get para os atributos
-	string get_Nome() const;
+	char get_Nome();
+	string get_nome() const;
 	string get_Classe() const;
 	int get_Max_HP() const;
 	int get_HP() const;

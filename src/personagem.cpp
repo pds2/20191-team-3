@@ -50,7 +50,33 @@ void Personagem::Usar_Item(HealingItem curativo)
         _hp_Atual = _hp_Max;
 }
 
-string Personagem::get_Nome() const
+char Personagem::get_Nome()
+{
+    if (_nome == "Dorcas")
+        return 'D';
+    else if (_nome == "Eliwood")
+        return 'E';
+    else if (_nome == "Erk")
+        return 'E';
+    else if (_nome == "Florina")
+        return 'F';
+    else if (_nome == "Hector")
+        return 'H';
+    else if (_nome == "Lyn")
+        return 'L';
+    else if (_nome == "Marcus")
+        return 'M';
+    else if (_nome == "Raven")
+        return 'R';
+    else if (_nome == "Wallace")
+        return 'F';
+    else if (_nome == "Will")
+        return 'W';
+    else
+        return ' ';
+}
+
+string Personagem::get_nome() const
 {
     return _nome;
 }
@@ -213,7 +239,7 @@ Arma Personagem::Arma_Equipada() const
 
 void Personagem::imprime_status() const
 {
-    cout << get_Classe() << ": " << get_Nome() << endl
+    cout << get_Classe() << ": " << get_nome() << endl
          << "HP: " << get_HP() << "/" << get_Max_HP() << " Mov: " << get_Move() << endl
          << "Str: " << get_Str() << " Skl: " << get_Skill() << endl
          << "Spd: " << get_Spd() << " Lck: " << get_Lck() << endl
@@ -228,7 +254,7 @@ void Personagem::imprime_iventario() const
          << "Elixir" << endl;
 }
 
-// Exemplo de Função de Batalha da Base do RPG
+/* Exemplo de Função de Batalha da Base do RPG
 
 void Personagem::Ataque(Personagem &qrDefender){ 
     //Gera um número entre 1 e 100
@@ -266,3 +292,5 @@ bool Personagem::IsDead(){
         return false;
     } 
 }
+
+*/

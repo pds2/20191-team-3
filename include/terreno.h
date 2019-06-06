@@ -20,8 +20,6 @@ class Terreno {
         int get_defense(); //getter que busca o valor da property _defense
         bool get_ocupado(); //getter que busca o valor da property _ocupado
         void set_ocupacao(bool ocupado); //true ou false para determinar se o terreno acabou de ser ocupado/desocupado
-        bool is_ocupado();
-        void muda_ocupacao(bool ocupado);
         int get_tipo_ocupado(); //getter que busca o valor da property _ocupado
         void set_tipo_ocupacao(int ocupado); //0,1,2 para determinar pelo o que o terreno esta ocupado
 };
