@@ -57,6 +57,8 @@ Terreno::Terreno(char nome) //Construtor
     }
 }
 
+Terreno::Terreno(){}
+
 int Terreno::get_avoid() {
     return _avoid;
 }
@@ -65,12 +67,20 @@ int Terreno::get_defense() {
     return _defense;
 }
 
+int Terreno::get_tipo_ocupado() {
+    return _tipocupacao;
+}
+
 bool Terreno::get_ocupado() {
     return _ocupado;
 }
 
 void Terreno::set_ocupacao(bool ocupacao) {
     _ocupado = ocupacao;
+}
+
+void Terreno::set_tipo_ocupacao(int tipocupacao) {
+    _tipocupacao = tipocupacao;
 }
 
 

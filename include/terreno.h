@@ -8,6 +8,7 @@ class Terreno {
         int _avoid;
         int _defense;
         bool _ocupado;
+        int _tipocupacao; // Retorna se o terreno esta ocupado 0 - Vazio 1 - Heroi 2 - Monstro
 
     public:
         enum TipoTerreno { Plain, Forest, Mountain, Fort }; //enum que lista os possíveis terrenos
@@ -20,6 +21,7 @@ class Terreno {
         bool get_ocupado(); //getter que busca o valor da property _ocupado
         void set_ocupacao(bool ocupado); //true ou false para determinar se o terreno acabou de ser ocupado/desocupado
         bool is_ocupado();
-
         void muda_ocupacao(bool ocupado);
+        int get_tipo_ocupado(); //getter que busca o valor da property _ocupado
+        void set_tipo_ocupacao(int ocupado); //0,1,2 para determinar pelo o que o terreno esta ocupado
 };

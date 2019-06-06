@@ -228,6 +228,8 @@ void Personagem::imprime_iventario() const
          << "Elixir" << endl;
 }
 
+// Exemplo de Função de Batalha da Base do RPG
+
 void Personagem::Ataque(Personagem &qrDefender){ 
     //Gera um número entre 1 e 100
     unsigned int uiAttack1 = (rand() % 100) + 1;
