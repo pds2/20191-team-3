@@ -28,10 +28,9 @@ int main()
                     cout << " Você morreu! " << endl;
                     qGame.RemoveDeadHeroes();
                     if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
-                        cout << "Você Venceu! " << endl;
+                        cout << "Você Perdeu! " << endl;
                         bGameOver = true;
                     }
-                    bGameOver = true;
                 }
                 else { 
                     qGame.RemoveDeadMonsters(); //Limpa os Monstros eliminados do game

@@ -21,7 +21,7 @@ private:
 	vector<vector<Terreno>> _grade; //Matriz de terrenos que compõe o mapa
 	int _num_linhas;
 	int _num_colunas;
-	map<string, Personagem *> _lista_personagens; //Lista de personagens
+	map<string, Personagem*> _lista_personagens; //Lista de personagens
 	Personagem cria_personagem(string _nome);	 //Método de criação de personagens
 
 public:

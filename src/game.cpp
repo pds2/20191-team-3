@@ -19,9 +19,10 @@ CRolePlayingGame::CRolePlayingGame()
     //Pega valor do tamanho de lihas e Colunas do Mapa 
     int num_linhas = map.get_num_linhas();
     int num_colunas = map.get_num_colunas();
-    
+ 
     //Não entendi essa função mas estava no codigo do Vinicius 
     map.cria_lista_personagens();
+    cout << "1" << endl;
     
     //Cria os personagens e setam eles em uma posicao aleatoria no mapa
     bool bFoundSpot = false;
@@ -29,14 +30,16 @@ CRolePlayingGame::CRolePlayingGame()
     while (!bFoundSpot) { 
         unsigned int uiRow = 1 + ( rand ()% num_linhas); 
         unsigned int uiCol = 1 + ( rand ()% num_colunas); 
-    
+        
         Terreno Retorno; //Recebe valor de Retorno da função Query Location para saber se Terreno está 
         Retorno = QueryLocation(uiRow,uiCol); //Ocupado ou não
+        cout << "2" << endl;
         if (TerrenoComparator(Retorno,TerraVazia)) { /*Comparando o Terreno gerado aletorio com vazio */
             Personagem P = map.get_personagem("Marcus");
             mqHero[uiHero] = P;
             ++uiHero;
             mqpaaCreatures[uiRow][uiCol] = &mqHero[uiHero];
+            cout << "3" << endl;
             if (uiHero == 5) {
                 bFoundSpot = true;
             }
@@ -44,9 +47,11 @@ CRolePlayingGame::CRolePlayingGame()
             // P.imprime_iventario();
         }
     } 
+    cout << "4" << endl;
     //Cria 10 Monstros e seta ele em posiçoes aleatorias no mapa 
     bFoundSpot = false;
     unsigned int uiMonster = 0;
+    cout << "5" << endl;
     while (!bFoundSpot) {
         unsigned int uiRow = 1 + (rand() % num_linhas);
         unsigned int uiCol = 1 + (rand() % num_colunas);
@@ -86,11 +91,14 @@ Terreno CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
     Terreno t;
     for (unsigned int uIndex = 0; uIndex < 10; ++uIndex)
     {
-        if (mqpaaCreatures[uiRow][uiCol] == &mqaMonsters[uIndex]) {
+         cout << "2" << endl;
+        if (mqpaaCreatures[uiRow][uiCol] == &(mqaMonsters[uIndex])) {
+             cout << "2" << endl;
             t.set_tipo_ocupacao(2);
             return t;
         }
     }
+     cout << "2" << endl;
     for (unsigned int uIndex = 0; uIndex < 5; ++uIndex){
         if (mqpaaCreatures[uiRow][uiCol] == &mqHero[uIndex]) {
              t.set_tipo_ocupacao(1);

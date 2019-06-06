@@ -24,6 +24,7 @@ Mapa::Mapa(string nome) //Construtor
         }
     }
     map_file.close();
+    cout << "0" << endl;
 }
 
 void Mapa::cria_lista_personagens()

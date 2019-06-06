@@ -13,12 +13,12 @@ entre eles , como mortes e posições.*/
 
 class CRolePlayingGame
 {
-     private:
+    private:
         // Compara na matriz de objetos o objeto passado instaciado que pode ser monstro, heroi ou mapa
         bool LocateCreature(unsigned int& uirRow, unsigned int& uirCol, Personagem* qpCreature);
         Mapa map = Mapa("mapa_ch12.txt"); //Um um objeto da classe Mapa para construir o mapa
         Personagem mqHero[5]; // 5 objetos da classe Personagem para construir o equipe
-        Personagem mqaMonsters[10]; // 10 objetos da classe CCreature para construir os monstros
+        vector < Personagem > mqaMonsters(10); // 10 objetos da classe CCreature para construir os monstros
         vector<vector<Personagem*>> mqpaaCreatures; //Uma matriz de para amarzenar a localização dos objetos no mapa
     public:
         CRolePlayingGame();   
