@@ -6,7 +6,7 @@
 using namespace std;
 
 //Construtor
-Personagem::Personagem(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence)
+Personagem::Personagem(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence, bool jogador)
 {
     _nome = nome;
     if (classe == "PegasusKnight")
@@ -15,7 +15,7 @@ Personagem::Personagem(string nome, string classe, int HP, int strength, int ski
         _classe = classe;
     _hp_Max = HP;
     _hp_Atual = HP;
-    _player = true;
+    _player = jogador;
     _strengh = strength;
     _skill = skill;
     _speed = speed;

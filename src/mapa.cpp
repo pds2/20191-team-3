@@ -24,25 +24,35 @@ Mapa::Mapa(string nome) //Construtor
         }
     }
     map_file.close();
+
+    cria_lista_personagens();
     cout << "0" << endl;
 }
 
 void Mapa::cria_lista_personagens()
 {
-    vector<string> lista = {"Eliwood", "Lyn", "Wil", "Hector", "Raven", "Florina", "Dorcas", "Wallace", "Marcus", "Erk"};
-    for (unsigned int i = 0; i < lista.size(); i++)
+    vector<string> lista1 = {"Eliwood", "Lyn", "Wil", "Hector", "Raven", "Florina", "Dorcas", "Wallace", "Marcus", "Erk"};
+    vector<string> lista2 = {"Batta", "Beyard", "Damian", "Glass", "Heintz", "Lundgren", "Migal", "Yogi", "Zagan", "Zugu"};
+    string pasta1 = "Entradas/Personagens/";
+    string pasta2 = "Entradas/Inimigos/";
+    for (unsigned int i = 0; i < lista1.size(); i++)
     {
-        string pasta = "Entradas/Personagens/";
         ifstream infile;
-        infile.open(pasta + lista[i] + ".txt");
+        infile.open(pasta1 + lista1[i] + ".txt");
         if (infile.is_open())
         {
             string nome, classe;
             int hp, str, skl, spd, lck, def, res;
             infile >> nome >> classe >> hp >> str >> skl >> spd >> lck >> def >> res;
-            Personagem *p = new Personagem(nome, classe, hp, str, skl, spd, lck, def, res);
-            p->set_i(_num_linhas - 1);
-            p->set_j(i);
+            Personagem *p = new Personagem(nome, classe, hp, str, skl, spd, lck, def, res, true);
+            unsigned int rng_i, rng_j;
+            do
+            {
+                rng_i = rand() % _num_linhas;
+                rng_j = rand() % _num_colunas;
+            } while (_grade[rng_i][rng_j].get_ocupado() == true);
+            p->set_i(rng_i);
+            p->set_j(rng_j);
             p->set_usavel(true);
             if (p->get_Classe() == "Mercenary")
             {
@@ -110,6 +120,67 @@ void Mapa::cria_lista_personagens()
             _grade[p->get_i()][p->get_j()].set_ocupacao(true);
         }
         infile.close();
+
+        infile.open(pasta2 + lista2[i] + ".txt");
+        if (infile.is_open())
+        {
+            string nome, classe;
+            int hp, str, skl, spd, lck, def, res;
+            infile >> nome >> classe >> hp >> str >> skl >> spd >> lck >> def >> res;
+            Personagem *p = new Personagem(nome, classe, hp, str, skl, spd, lck, def, res, false);
+            unsigned int rng_i, rng_j;
+            do
+            {
+                rng_i = rand() % _num_linhas;
+                rng_j = rand() % _num_colunas;
+            } while (_grade[rng_i][rng_j].get_ocupado() == true);
+            p->set_i(rng_i);
+            p->set_j(rng_j);
+            p->set_usavel(true);
+            if (p->get_Classe() == "Mercenary")
+            {
+                Arma a = Arma("Iron Sword");
+                p->Add_Arma(a);
+            }
+            else if (p->get_Classe() == "Lord")
+            {
+                Arma a = Arma("Steel Sword");
+                p->Add_Arma(a);
+            }
+            else if (p->get_Classe() == "General")
+            {
+                Arma a = Arma("Steel Lance");
+                p->Add_Arma(a);
+            }
+            else if (p->get_Classe() == "Pegasus Knight")
+            {
+                Arma a = Arma("Steel Lance");
+                p->Add_Arma(a);
+            }
+            else if (p->get_Classe() == "Paladin")
+            {
+                Arma a = Arma("Steel Sword");
+                p->Add_Arma(a);
+            }
+            else if (p->get_Classe() == "Archer")
+            {
+                Arma a = Arma("Iron Bow");
+                p->Add_Arma(a);
+            }
+            else if (p->get_Classe() == "Mage")
+            {
+                Arma a = Arma("Fire");
+                p->Add_Arma(a);
+            }
+            else if (p->get_Classe() == "Warrior")
+            {
+                Arma a = Arma("Steel Axe");
+                p->Add_Arma(a);
+            }
+            _lista_personagens.insert(pair<string, Personagem *>(p->get_nome(), p));
+            _grade[p->get_i()][p->get_j()].set_ocupacao(true);
+        }
+        infile.close();
     }
 }
 
@@ -133,14 +204,17 @@ Personagem Mapa::get_personagem(string nome)
     return *_lista_personagens[nome];
 }
 
-int Mapa::get_num_colunas(){
+int Mapa::get_num_colunas()
+{
     return _num_colunas;
 }
 
-int Mapa::get_num_linhas(){
+int Mapa::get_num_linhas()
+{
     return _num_linhas;
 }
 
-Terreno Mapa::GetMazeSquare(unsigned int uiRow, unsigned int uiCol){ 
-    return _grade[uiRow][uiCol]; 
+Terreno Mapa::GetMazeSquare(unsigned int uiRow, unsigned int uiCol)
+{
+    return _grade[uiRow][uiCol];
 }

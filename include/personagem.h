@@ -41,7 +41,7 @@ private:
 
 public:
 	//Construtor
-	Personagem(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence);
+	Personagem(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence, bool jogador);
 	Personagem();
 
 	//Conjunto de métodos get para os atributos

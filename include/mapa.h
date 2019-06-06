@@ -21,15 +21,15 @@ private:
 	vector<vector<Terreno>> _grade; //Matriz de terrenos que compõe o mapa
 	int _num_linhas;
 	int _num_colunas;
-	map<string, Personagem*> _lista_personagens; //Lista de personagens
+	map<string, Personagem*> _lista_personagens; //Lista de personagens e inimigos
 	Personagem cria_personagem(string _nome);	 //Método de criação de personagens
+	void cria_lista_personagens();	
 
 public:
 	//Construtor, string nome é o nome do arquivo de entrada
 	Mapa(string nome);
 
 	void imprime(); //Imprime o mapa como uma matriz de caracteres
-	void cria_lista_personagens();
 	void imprime_personagem(string nome);
 	void equip_armas(string nome); //Cria as armas e as equipam ao personagem
 	int get_num_linhas();
