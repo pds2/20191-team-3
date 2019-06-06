@@ -1,3 +1,4 @@
+#pragma once
 #ifndef HEALINGITEM_H_
 #define HEALINGITEM_H_
 

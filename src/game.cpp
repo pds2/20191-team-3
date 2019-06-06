@@ -103,6 +103,8 @@ Terreno CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
 
 bool CRolePlayingGame::MoveHero(char const kcDirection, int numPersonagem)
 {
+    int num_linhas = map.get_num_linhas();
+    int num_colunas = map.get_num_colunas();
     unsigned int uiHeroRow;
     unsigned int uiHeroCol;
     LocateCreature(uiHeroRow, uiHeroCol, &mqHero[numPersonagem]);
@@ -134,7 +136,7 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, int numPersonagem)
         }
     }
     // Trata o tamanho do mapa diponivel
-    if (uiNextRow > map.get_num_linhas || uiNextCol > map.get_num_colunas)
+    if ((unsigned)uiNextRow > (unsigned)num_linhas || (unsigned)uiNextCol > (unsigned)num_colunas)
         return false;
     
     //Faz as iterações do personagem dependendo das instancias do mapa
@@ -158,8 +160,8 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, int numPersonagem)
 
 void CRolePlayingGame::printboard()
 {
-    for (unsigned int uiRow = 0; uiRow < map.get_num_linhas; ++uiRow) {
-        for (unsigned int uiCol = 0; uiCol < map.get_num_colunas; ++uiCol) {
+    for (unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow) {
+        for (unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol) {
             Terreno TerrenoPrint;
             TerrenoPrint = QueryLocation(uiRow, uiCol);
             if(TerrenoPrint.get_tipo_ocupado() == 0){

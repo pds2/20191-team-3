@@ -254,7 +254,7 @@ void Personagem::imprime_iventario() const
          << "Elixir" << endl;
 }
 
-/* Exemplo de Função de Batalha da Base do RPG
+// Exemplo de Função de Batalha da Base do RPG NAO ESTÁ CORRETO
 
 void Personagem::Ataque(Personagem &qrDefender){ 
     //Gera um número entre 1 e 100
@@ -264,33 +264,31 @@ void Personagem::Ataque(Personagem &qrDefender){
     unsigned int uiDefense2 = (rand() % 100) + 1; 
     
     //Verifica se o atacante ( herói ) vence
-    if ( uiAttack1 > qrDefender.muiAttack && uiDefense1 < qrDefender.muiDefense) {
-     muiHitPoints++;
+    if ( uiAttack1 > qrDefender._skill && uiDefense1 < qrDefender._defense) {
+     _hp_Atual++;
      std::cout << " Monstro Hit" << std::endl;
     }
     else {
      std::cout << "Monstro Perde" << std::endl;
     } 
     //Verifique se o monstro acerta o herói
-    if (uiAttack2 < qrDefender.muiAttack && uiDefense2 > qrDefender.muiDefense) {
-        qrDefender.muiHitPoints--;
+    if (uiAttack2 < qrDefender._skill && uiDefense2 > qrDefender._defense) {
+        qrDefender._hp_Atual--;
         std::cout << " Herói Hit " << std::endl;
     }else {
         std::cout << " Herói perde " << std::endl;
     }
     
-    std::cout <<  "Seus hitpoints: " << muiHitPoints << std::endl;
-    std::cout << " Pontos de vida do monstro: " << qrDefender.muiHitPoints << std::endl;
+    std::cout <<  "Seus hitpoints: " << _hp_Atual << std::endl;
+    std::cout << " Pontos de vida do monstro: " << qrDefender._hp_Atual << std::endl;
 }
 
 //Verificar se Objeto (Monstro ou Heroi) morreu    
 bool Personagem::IsDead(){
-    if(muiHitPoints == 0){
+    if(_hp_Atual == 0){
         return true;
     } 
     else{
         return false;
     } 
 }
-
-*/

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ARMA_H_
 #define ARMA_H_
 

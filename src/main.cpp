@@ -1,8 +1,6 @@
 #include <iostream>
 
 #include "game.h"
-#include "creature.h"
-#include "mapa.h"
 
 /* Cria o programa principal que chama as várias classes 
 e funções e interage com o utilizador . Aqui controla vários aspectos do jogo */

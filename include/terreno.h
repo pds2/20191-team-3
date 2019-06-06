@@ -1,3 +1,6 @@
+#pragma once
+#ifndef TERRENO_H_
+#define TERRENO_H_
 #include <string>
 
 using namespace std;
@@ -23,3 +26,5 @@ class Terreno {
         int get_tipo_ocupado(); //getter que busca o valor da property _ocupado
         void set_tipo_ocupacao(int ocupado); //0,1,2 para determinar pelo o que o terreno esta ocupado
 };
+
+#endif
