@@ -26,7 +26,6 @@ Mapa::Mapa(string nome) //Construtor
     map_file.close();
 
     cria_lista_personagens();
-    cout << "0" << endl;
 }
 
 void Mapa::cria_lista_personagens()
@@ -217,4 +216,18 @@ int Mapa::get_num_linhas()
 Terreno Mapa::GetMazeSquare(unsigned int uiRow, unsigned int uiCol)
 {
     return _grade[uiRow][uiCol];
+}
+
+map<string, Personagem*> Mapa::get_lista_personagens(){
+    return this->_lista_personagens;
+}
+
+Personagem* Mapa::getPersonagemPorPosicao(int x, int y){
+    for (std::map<string, Personagem*>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++){
+        if (it->second->get_i() == x && it->second->get_j() == y)
+            return it->second;
+    }
+
+    throw new exception("Nenhum personagem na posição.");
+    return NULL;
 }

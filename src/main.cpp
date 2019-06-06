@@ -20,7 +20,10 @@ int main()
         int cPersonagem;
         cout << "Escolha o personagem para mover ou 0 para sair"  << endl;
         std::cin >> cPersonagem;
-        while(cPersonagem != 0){
+        if (cPersonagem < 0 || cPersonagem > 5)
+            throw new exception("Personagem inválido.");
+
+        while (cPersonagem != 0){
             cout << " Use W, A , S ou D para mover : " << endl;
             std::cin >> cMove; 
             if (qGame.MoveHero(cMove, cPersonagem)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele

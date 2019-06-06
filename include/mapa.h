@@ -34,10 +34,10 @@ public:
 	void equip_armas(string nome); //Cria as armas e as equipam ao personagem
 	int get_num_linhas();
 	int get_num_colunas();
-
 	Terreno GetMazeSquare(unsigned int uiRow, unsigned int uiCol); // Retorna a posição procurada no mapa
-
 	Personagem get_personagem(string nome);
+	map<string, Personagem*> get_lista_personagens();
+	Personagem* getPersonagemPorPosicao(int x, int y);
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <time.h>  
-
+#include <map>
 #include "game.h"
 
 using namespace std;
@@ -12,62 +12,8 @@ entre eles , como mortes e posições.*/
 
 CRolePlayingGame::CRolePlayingGame()
 {
-    //Cria um objeto terreno vazio para realizar comparação e setar o personagem
-    Terreno TerraVazia;
-    TerraVazia.set_tipo_ocupacao(0);
-   
-    //Pega valor do tamanho de lihas e Colunas do Mapa 
-    int num_linhas = map.get_num_linhas();
-    int num_colunas = map.get_num_colunas();
- 
-    //Não entendi essa função mas estava no codigo do Vinicius 
-    map.cria_lista_personagens();
-    cout << "1" << endl;
-    
     //Cria os personagens e setam eles em uma posicao aleatoria no mapa
-    bool bFoundSpot = false;
-    unsigned int uiHero = 0; 
-    while (!bFoundSpot) { 
-        unsigned int uiRow = 1 + ( rand ()% num_linhas); 
-        unsigned int uiCol = 1 + ( rand ()% num_colunas); 
-        
-        Terreno Retorno; //Recebe valor de Retorno da função Query Location para saber se Terreno está 
-        Retorno = QueryLocation(uiRow,uiCol); //Ocupado ou não
-        cout << "2" << endl;
-        if (TerrenoComparator(Retorno,TerraVazia)) { /*Comparando o Terreno gerado aletorio com vazio */
-            Personagem P = map.get_personagem("Marcus");
-            mqHero[uiHero] = P;
-            ++uiHero;
-            mqpaaCreatures[uiRow][uiCol] = &mqHero[uiHero];
-            cout << "3" << endl;
-            if (uiHero == 5) {
-                bFoundSpot = true;
-            }
-            // P.imprime_status();
-            // P.imprime_iventario();
-        }
-    } 
-    cout << "4" << endl;
-    //Cria 10 Monstros e seta ele em posiçoes aleatorias no mapa 
-    bFoundSpot = false;
-    unsigned int uiMonster = 0;
-    cout << "5" << endl;
-    while (!bFoundSpot) {
-        unsigned int uiRow = 1 + (rand() % num_linhas);
-        unsigned int uiCol = 1 + (rand() % num_colunas);
-
-        Terreno Retorno; //Recebe valor de Retorno da função Query Location para saber se Terreno está 
-        Retorno = QueryLocation(uiRow,uiCol); //Ocupado ou não
-        if (TerrenoComparator(Retorno,TerraVazia)) { /*Comparando o Terreno gerado aletorio com vazio */
-            Personagem M = map.get_personagem("Monstro/Vilão");
-            mqaMonsters[uiMonster] = M;
-            mqpaaCreatures[uiRow][uiCol] = &mqaMonsters[uiMonster];
-            ++uiMonster;
-            if (uiMonster == 10) {
-                bFoundSpot = true;
-            }
-        }
-    }
+    map.cria_lista_personagens();
 }   
 
 bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol, Personagem* qpCreature)
@@ -84,30 +30,10 @@ bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol
     return false;
 }
 
-
-
-Terreno CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
+int CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
 {
-    Terreno t;
-    for (unsigned int uIndex = 0; uIndex < 10; ++uIndex)
-    {
-         cout << "2" << endl;
-        if (mqpaaCreatures[uiRow][uiCol] == &(mqaMonsters[uIndex])) {
-             cout << "2" << endl;
-            t.set_tipo_ocupacao(2);
-            return t;
-        }
-    }
-     cout << "2" << endl;
-    for (unsigned int uIndex = 0; uIndex < 5; ++uIndex){
-        if (mqpaaCreatures[uiRow][uiCol] == &mqHero[uIndex]) {
-             t.set_tipo_ocupacao(1);
-            return t;
-        }
-    }
-    return map.GetMazeSquare(uiRow, uiCol);
+    return map.GetMazeSquare(uiRow, uiCol).get_tipo_ocupado();
 }
-
 
 bool CRolePlayingGame::MoveHero(char const kcDirection, int numPersonagem)
 {
@@ -170,19 +96,16 @@ void CRolePlayingGame::printboard()
 {
     for (unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow) {
         for (unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol) {
-            Terreno TerrenoPrint;
-            TerrenoPrint = QueryLocation(uiRow, uiCol);
-            if(TerrenoPrint.get_tipo_ocupado() == 0){
-                cout << TerrenoPrint.get_nome() << endl;
+            int tipoOcupacao = QueryLocation(uiRow, uiCol);
+            if(tipoOcupacao == 0){
+                cout << "*" << endl;
             }
-            if(TerrenoPrint.get_tipo_ocupado() == 1){
-                Personagem p = *mqpaaCreatures[uiRow][uiCol];
-                cout << p.get_Nome();
+            else if(tipoOcupacao == 1){
+                cout << map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(1) << endl;
             }
-            if(TerrenoPrint.get_tipo_ocupado() == 2){
-                Personagem p = *mqpaaCreatures[uiRow][uiCol];
-                cout << p.get_Nome();
-            } 
+            else {
+                cout << "M" << endl;
+            }
         }
         cout << endl;
     }
