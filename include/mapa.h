@@ -7,7 +7,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-
+#include <exception>
 #include "terreno.h"
 #include "personagem.h"
 #include "arma.h"
@@ -26,6 +26,7 @@ private:
 	void cria_lista_personagens();
 
 public:
+	Mapa();
 	//Construtor, string nome é o nome do arquivo de entrada
 	Mapa(string nome);
 

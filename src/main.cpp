@@ -24,26 +24,17 @@ int main()
                 cout << " Use W, A , S ou D para mover : " << endl;
                 std::cin >> cMove; 
                 if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
-                    if (qGame.HeroIsDead(cPersonagem)) { //Se o herói é morto
-                        cout << " Você morreu! " << endl;
-                        qGame.RemoveDeadHeroes();
-                        if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
-                            cout << "Você Perdeu! " << endl;
-                            bGameOver = true;
-                        }
+                    if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
+                        cout << "Você Perdeu! " << endl;
+                        bGameOver = true;
                     }
-                    else { 
-                        qGame.RemoveDeadMonsters(); //Limpa os Monstros eliminados do game
-                        if (qGame.AllMonstersDead()) { //Se todos os monstros são eliminados
-                            cout << "Você Venceu! " << endl;
-                            bGameOver = true;
-                        }
+                    else if (qGame.AllMonstersDead()) { 
+                        cout << "Você Venceu! " << endl;
+                        bGameOver = true;
                     }
                 }
             }
         }
-
-        
     } while (!bGameOver);
     return 0;
 }

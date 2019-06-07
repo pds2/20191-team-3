@@ -1,5 +1,7 @@
 #include "mapa.h"
 
+Mapa::Mapa() {}
+
 Mapa::Mapa(string nome) //Construtor
 {
     ifstream map_file;
@@ -246,7 +248,7 @@ Personagem *Mapa::getPersonagemPorPosicao(int x, int y)
             return it->second;
     }
 
-    throw new exception("Nenhum personagem na posição.");
+    throw runtime_error("Nenhum personagem na posição.");
     return NULL;
 }
 
