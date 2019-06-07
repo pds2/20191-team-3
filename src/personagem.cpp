@@ -292,3 +292,7 @@ bool Personagem::IsDead(){
         return false;
     } 
 }
+
+bool Personagem::isPlayer() {
+    return this->_player;
+}

@@ -37,7 +37,10 @@ public:
 	Terreno GetMazeSquare(unsigned int uiRow, unsigned int uiCol); // Retorna a posição procurada no mapa
 	Personagem get_personagem(string nome);
 	map<string, Personagem*> get_lista_personagens();
+	map<string, Personagem*> get_lista_personagens(bool heroi);
 	Personagem* getPersonagemPorPosicao(int x, int y);
+	void set_ocupacao_terreno(int x, int y, int tipoOcupacao);
+	void toggle_ocupado(int x, int y, bool ocupado);
 };
 
 #endif

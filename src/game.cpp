@@ -13,7 +13,7 @@ entre eles , como mortes e posições.*/
 CRolePlayingGame::CRolePlayingGame()
 {
     //Cria os personagens e setam eles em uma posicao aleatoria no mapa
-    map.cria_lista_personagens();
+    this->map = Mapa("mapa_ch12.txt");
 }   
 
 bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol, Personagem* qpCreature)
@@ -35,13 +35,13 @@ int CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
     return map.GetMazeSquare(uiRow, uiCol).get_tipo_ocupado();
 }
 
-bool CRolePlayingGame::MoveHero(char const kcDirection, int numPersonagem)
+bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
 {
     int num_linhas = map.get_num_linhas();
     int num_colunas = map.get_num_colunas();
-    unsigned int uiHeroRow;
-    unsigned int uiHeroCol;
-    LocateCreature(uiHeroRow, uiHeroCol, &mqHero[numPersonagem]);
+    Personagem personagem = map.get_personagem(nomePersonagem);
+    unsigned int uiHeroRow = personagem.get_i();
+    unsigned int uiHeroCol = personagem.get_j();
     unsigned int uiNextRow = uiHeroRow;
     unsigned int uiNextCol = uiHeroCol;
     switch (kcDirection) {
@@ -72,24 +72,14 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, int numPersonagem)
     // Trata o tamanho do mapa diponivel
     if ((unsigned)uiNextRow > (unsigned)num_linhas || (unsigned)uiNextCol > (unsigned)num_colunas)
         return false;
-    
-    //Faz as iterações do personagem dependendo das instancias do mapa
-    Terreno TerraVazia;
-    TerraVazia.set_tipo_ocupacao(0);
-    Terreno TerraOcupadaM;
-    TerraOcupadaM.set_tipo_ocupacao(2);
-    Terreno cNextLoc = QueryLocation(uiNextRow, uiNextCol);
-    if (TerrenoComparator(cNextLoc,TerraVazia)) {
-        mqpaaCreatures[uiNextRow][uiNextCol] = &mqHero[numPersonagem];
-        mqpaaCreatures[uiHeroRow][uiHeroCol] = 0;
-        return true;
-    }
-    else if (TerrenoComparator(cNextLoc,TerraOcupadaM)) {
-        mqHero[numPersonagem].Ataque(*mqpaaCreatures[uiNextRow][uiNextCol]);
-        return true;
-    }
 
-    return false;
+    
+
+    map.set_ocupacao_terreno(uiHeroRow, uiHeroCol, 0);
+    map.toggle_ocupado(uiHeroRow, uiHeroCol, false);
+
+    map.set_ocupacao_terreno(uiNextRow, uiNextCol, 1);
+    map.toggle_ocupado(uiHeroRow, uiHeroCol, true);
 }
 
 void CRolePlayingGame::printboard()
@@ -170,3 +160,6 @@ bool CRolePlayingGame::TerrenoComparator(Terreno &terreno1, Terreno &terreno2) {
     return false;
 }
 
+Mapa CRolePlayingGame::getMapa() {
+    return this->map;
+}
