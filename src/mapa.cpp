@@ -32,7 +32,7 @@ Mapa::Mapa(string nome) //Construtor
 
 void Mapa::cria_lista_personagens()
 {
-    vector<string> lista1 = {"Eliwood", "Lyn", "Wil", "Hector", "Raven", "Florina", "Dorcas", "Wallace", "Marcus", "Erk"};
+    vector<string> lista1 = {"Eliwood", "Lyn", "Wil", "Hector", "Raven", "Florina", "Dorcas", "Wallace", "Sain", "Erk"};
     vector<string> lista2 = {"Batta", "Beyard", "Damian", "Glass", "Heintz", "Lundgren", "Migal", "Yogi", "Zagan", "Zugu"};
     string pasta1 = "Entradas/Personagens/";
     string pasta2 = "Entradas/Inimigos/";
