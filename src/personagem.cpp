@@ -41,7 +41,7 @@ Personagem::Personagem(string nome, string classe, int HP, int strength, int ski
     _armaequipada = -1; //Não tem arma equipada
 };
 
-Personagem::Personagem(){}
+Personagem::Personagem() {}
 
 void Personagem::Usar_Item(HealingItem curativo)
 {
@@ -160,6 +160,11 @@ int Personagem::Avo() //Avoid = (Speed * 2) + Luck
     return (get_Spd() * 2) + get_Lck();
 }
 
+void Personagem::set_HP(int HP)
+{
+    _hp_Atual = HP;
+}
+
 void Personagem::set_i(int pos_i)
 {
     _pos_i = pos_i;
@@ -254,45 +259,20 @@ void Personagem::imprime_iventario() const
          << "Elixir" << endl;
 }
 
-// Exemplo de Função de Batalha da Base do RPG NAO ESTÁ CORRETO
-
-void Personagem::Ataque(Personagem &qrDefender){ 
-    //Gera um número entre 1 e 100
-    unsigned int uiAttack1 = (rand() % 100) + 1;
-    unsigned int uiDefense1 = (rand() % 100) + 1;
-    unsigned int uiAttack2 = (rand() % 100) + 1;
-    unsigned int uiDefense2 = (rand() % 100) + 1; 
-    
-    //Verifica se o atacante ( herói ) vence
-    if ( uiAttack1 > qrDefender._skill && uiDefense1 < qrDefender._defense) {
-     _hp_Atual++;
-     std::cout << " Monstro Hit" << std::endl;
-    }
-    else {
-     std::cout << "Monstro Perde" << std::endl;
-    } 
-    //Verifique se o monstro acerta o herói
-    if (uiAttack2 < qrDefender._skill && uiDefense2 > qrDefender._defense) {
-        qrDefender._hp_Atual--;
-        std::cout << " Herói Hit " << std::endl;
-    }else {
-        std::cout << " Herói perde " << std::endl;
-    }
-    
-    std::cout <<  "Seus hitpoints: " << _hp_Atual << std::endl;
-    std::cout << " Pontos de vida do monstro: " << qrDefender._hp_Atual << std::endl;
-}
-
-//Verificar se Objeto (Monstro ou Heroi) morreu    
-bool Personagem::IsDead(){
-    if(_hp_Atual == 0){
+//Verificar se Objeto (Monstro ou Heroi) morreu
+bool Personagem::IsDead()
+{
+    if (_hp_Atual == 0)
+    {
         return true;
-    } 
-    else{
+    }
+    else
+    {
         return false;
-    } 
+    }
 }
 
-bool Personagem::isPlayer() {
+bool Personagem::isPlayer()
+{
     return this->_player;
 }
