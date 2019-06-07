@@ -68,6 +68,7 @@ public:
 	int Hit();  //Chance de acertar
 	int Crit(); //Chance de ataque crítico
 	int Avo();  //Chance de desviar de ataque
+	void set_HP(int HP); //Muda HP atual
 
 	//Parametros de localizacao no mapa
 	void set_i(int pos_i);
@@ -81,9 +82,7 @@ public:
 	//Impressão de dados na tela
 	void imprime_status() const;
 	void imprime_iventario() const;
-
-	//Função que calcula o valor de ataque e se foi bem sucedido
-    void Ataque(Personagem &qrDefender);
+	    
     //Função que retorna se o objeto (Monstro ou Heroi) foi eliminado
     bool IsDead();
 };

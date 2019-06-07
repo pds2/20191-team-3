@@ -21,9 +21,9 @@ private:
 	vector<vector<Terreno>> _grade; //Matriz de terrenos que compõe o mapa
 	int _num_linhas;
 	int _num_colunas;
-	map<string, Personagem*> _lista_personagens; //Lista de personagens e inimigos
+	map<string, Personagem *> _lista_personagens; //Lista de personagens e inimigos
 	Personagem cria_personagem(string _nome);	 //Método de criação de personagens
-	void cria_lista_personagens();	
+	void cria_lista_personagens();
 
 public:
 	//Construtor, string nome é o nome do arquivo de entrada
@@ -36,8 +36,10 @@ public:
 	int get_num_colunas();
 	Terreno GetMazeSquare(unsigned int uiRow, unsigned int uiCol); // Retorna a posição procurada no mapa
 	Personagem get_personagem(string nome);
-	map<string, Personagem*> get_lista_personagens();
-	Personagem* getPersonagemPorPosicao(int x, int y);
+	map<string, Personagem *> get_lista_personagens();
+	Personagem *getPersonagemPorPosicao(int x, int y);
+
+	void Batalha(Personagem &Atacante, Personagem &Defensor);
 };
 
 #endif

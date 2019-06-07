@@ -218,16 +218,98 @@ Terreno Mapa::GetMazeSquare(unsigned int uiRow, unsigned int uiCol)
     return _grade[uiRow][uiCol];
 }
 
-map<string, Personagem*> Mapa::get_lista_personagens(){
+map<string, Personagem *> Mapa::get_lista_personagens()
+{
     return this->_lista_personagens;
 }
 
-Personagem* Mapa::getPersonagemPorPosicao(int x, int y){
-    for (std::map<string, Personagem*>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++){
+Personagem *Mapa::getPersonagemPorPosicao(int x, int y)
+{
+    for (std::map<string, Personagem *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
+    {
         if (it->second->get_i() == x && it->second->get_j() == y)
             return it->second;
     }
 
     throw new exception("Nenhum personagem na posição.");
     return NULL;
+}
+
+void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
+{
+    //Gera quatro números aleatótios de 0 a 99
+    //Valores de hit e crit do atacante
+    unsigned int hitA = rand() % 100;
+    unsigned int critA = rand() % 100;
+
+    //Valores de hit e crit do defensor
+    unsigned int hitD = rand() % 100;
+    unsigned int critD = rand() % 100;
+
+    //Valores de terreno
+    Terreno tA = GetMazeSquare(Atacante.get_i(), Atacante.get_j());
+    Terreno tD = GetMazeSquare(Defensor.get_i(), Defensor.get_j());
+
+    //Primeiro ataque
+    if (hitA > Atacante.Hit() - Defensor.Avo() - tD.get_avoid())
+    {
+        int dano;
+        if (critA > Atacante.Crit())
+            dano = (Atacante.Atk() - Defensor.get_Def() - tD.get_defense()) * 3;
+        else
+            dano = Atacante.Atk() - Defensor.get_Def() - tD.get_defense();
+        if (dano > 0)
+        {
+            int HP = Defensor.get_HP() - dano;
+            if (HP <= 0)
+            {
+                Defensor.set_HP(0);
+                cout << "Inimigo derrotado." << endl;
+                return;
+            }
+        }
+    }
+    //Contra-ataque
+    if (hitD > Defensor.Hit() - Atacante.Avo() - tA.get_avoid())
+    {
+        int dano;
+        if (critD > Atacante.Crit())
+            dano = (Defensor.Atk() - Atacante.get_Def() - tA.get_defense()) * 3;
+        else
+            dano = Defensor.Atk() - Atacante.get_Def() - tA.get_defense();
+        if (dano > 0)
+        {
+            int HP = Atacante.get_HP() - dano;
+            if (HP <= 0)
+            {
+                Atacante.set_HP(0);
+                cout << Atacante.get_nome() << " derrotado." << endl;
+                return;
+            }
+        }
+    }
+    //Último ataque
+    if (Atacante.get_Spd() - Defensor.get_Spd() >= 4)
+    {
+        hitA = rand() % 100;
+        critA = rand() % 100;
+        if (hitA > Atacante.Hit() - Defensor.Avo() - tD.get_avoid())
+        {
+            int dano;
+            if (critA > Atacante.Crit())
+                dano = (Atacante.Atk() - Defensor.get_Def() - tD.get_defense()) * 3;
+            else
+                dano = Atacante.Atk() - Defensor.get_Def() - tD.get_defense();
+            if (dano > 0)
+            {
+                int HP = Defensor.get_HP() - dano;
+                if (HP <= 0)
+                {
+                    Defensor.set_HP(0);
+                    cout << "Inimigo derrotado." << endl;
+                    return;
+                }
+            }
+        }
+    }
 }
