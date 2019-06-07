@@ -40,6 +40,11 @@ public:
 	Personagem *getPersonagemPorPosicao(int x, int y);
 
 	void Batalha(Personagem &Atacante, Personagem &Defensor);
+	map<string, Personagem*> get_lista_personagens();
+	map<string, Personagem*> get_lista_personagens(bool heroi);
+	Personagem* getPersonagemPorPosicao(int x, int y);
+	void set_ocupacao_terreno(int x, int y, int tipoOcupacao);
+	void toggle_ocupado(int x, int y, bool ocupado);
 };
 
 #endif

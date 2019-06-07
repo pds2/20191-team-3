@@ -85,6 +85,7 @@ public:
 	    
     //Função que retorna se o objeto (Monstro ou Heroi) foi eliminado
     bool IsDead();
+	bool isPlayer();
 };
 
 #endif

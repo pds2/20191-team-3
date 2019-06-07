@@ -117,6 +117,7 @@ void Mapa::cria_lista_personagens()
             }
             _lista_personagens.insert(pair<string, Personagem *>(p->get_nome(), p));
             _grade[p->get_i()][p->get_j()].set_ocupacao(true);
+            _grade[p->get_i()][p->get_j()].set_tipo_ocupacao(1);
         }
         infile.close();
 
@@ -178,6 +179,7 @@ void Mapa::cria_lista_personagens()
             }
             _lista_personagens.insert(pair<string, Personagem *>(p->get_nome(), p));
             _grade[p->get_i()][p->get_j()].set_ocupacao(true);
+            _grade[p->get_i()][p->get_j()].set_tipo_ocupacao(2);
         }
         infile.close();
     }
@@ -227,6 +229,20 @@ Personagem *Mapa::getPersonagemPorPosicao(int x, int y)
 {
     for (std::map<string, Personagem *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
     {
+map<string, Personagem*> Mapa::get_lista_personagens(bool heroi){
+    std::map<string, Personagem*> personagensAux;
+    
+    for (std::map<string, Personagem*>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++){
+        if (it->second->isPlayer() == heroi)
+            personagensAux.insert(make_pair(it->first, it->second));
+            
+    }
+
+    return personagensAux;
+}
+
+Personagem* Mapa::getPersonagemPorPosicao(int x, int y){
+    for (std::map<string, Personagem*>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++){
         if (it->second->get_i() == x && it->second->get_j() == y)
             return it->second;
     }
@@ -312,4 +328,10 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
             }
         }
     }
+void Mapa::set_ocupacao_terreno(int x, int y, int tipoOcupacao) {
+    this->_grade[x][y].set_tipo_ocupacao(tipoOcupacao);
+}
+
+void Mapa::toggle_ocupado(int x, int y, bool ocupado) {
+    this->_grade[x][y].set_ocupacao(ocupado);
 }

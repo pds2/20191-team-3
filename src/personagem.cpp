@@ -259,8 +259,6 @@ void Personagem::imprime_iventario() const
          << "Elixir" << endl;
 }
 
-// Exemplo de Função de Batalha da Base do RPG NAO ESTÁ CORRETO
-
 //Verificar se Objeto (Monstro ou Heroi) morreu
 bool Personagem::IsDead()
 {
@@ -272,4 +270,9 @@ bool Personagem::IsDead()
     {
         return false;
     }
+}
+
+bool Personagem::isPlayer()
+{
+    return this->_player;
 }

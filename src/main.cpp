@@ -17,33 +17,33 @@ int main()
         qGame.printboard(); //Printa o mapa na tela
         // Pega a entrada do usuário
         char cMove;
-        int cPersonagem;
-        cout << "Escolha o personagem para mover ou 0 para sair"  << endl;
-        std::cin >> cPersonagem;
-        if (cPersonagem < 0 || cPersonagem > 5)
-            throw new exception("Personagem inválido.");
-
-        while (cPersonagem != 0){
-            cout << " Use W, A , S ou D para mover : " << endl;
-            std::cin >> cMove; 
-            if (qGame.MoveHero(cMove, cPersonagem)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
-                if (qGame.HeroIsDead(cPersonagem)) { //Se o herói é morto
-                    cout << " Você morreu! " << endl;
-                    qGame.RemoveDeadHeroes();
-                    if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
-                        cout << "Você Perdeu! " << endl;
-                        bGameOver = true;
+        map<string, Personagem*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
+        for (std::map<string, Personagem*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
+            int qtdMovimentos = it->second->get_Move();
+            for (int i = 0; i < qtdMovimentos; i++) {
+                cout << " Use W, A , S ou D para mover : " << endl;
+                std::cin >> cMove; 
+                if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
+                    if (qGame.HeroIsDead(cPersonagem)) { //Se o herói é morto
+                        cout << " Você morreu! " << endl;
+                        qGame.RemoveDeadHeroes();
+                        if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
+                            cout << "Você Perdeu! " << endl;
+                            bGameOver = true;
+                        }
                     }
-                }
-                else { 
-                    qGame.RemoveDeadMonsters(); //Limpa os Monstros eliminados do game
-                    if (qGame.AllMonstersDead()) { //Se todos os monstros são eliminados
-                        cout << "Você Venceu! " << endl;
-                        bGameOver = true;
+                    else { 
+                        qGame.RemoveDeadMonsters(); //Limpa os Monstros eliminados do game
+                        if (qGame.AllMonstersDead()) { //Se todos os monstros são eliminados
+                            cout << "Você Venceu! " << endl;
+                            bGameOver = true;
+                        }
                     }
                 }
             }
         }
+
+        
     } while (!bGameOver);
     return 0;
 }
