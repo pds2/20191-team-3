@@ -16,20 +16,6 @@ CRolePlayingGame::CRolePlayingGame()
     this->map = Mapa("mapa_ch12.txt");
 }   
 
-bool CRolePlayingGame::LocateCreature(unsigned int& uirRow, unsigned int& uirCol, Personagem* qpCreature)
-{
-    for (unsigned int uiRow = 0; uiRow < 10; ++uiRow) {
-        for (unsigned int uiCol = 0; uiCol < 10; ++uiCol) {
-            if (mqpaaCreatures[uiRow][uiCol] == qpCreature) {
-                uirRow = uiRow;
-                uirCol = uiCol;
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 int CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
 {
     return map.GetMazeSquare(uiRow, uiCol).get_tipo_ocupado();
@@ -69,17 +55,27 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
             return false;
         }
     }
+    
     // Trata o tamanho do mapa diponivel
     if ((unsigned)uiNextRow > (unsigned)num_linhas || (unsigned)uiNextCol > (unsigned)num_colunas)
         return false;
 
-    
+    int tipoOcupacao = map.GetMazeSquare(uiNextRow, uiNextRow).get_tipo_ocupado();
+    if (tipoOcupacao == 0) { //terreno destino vazio
+        //esvazia o terreno atual
+        map.set_ocupacao_terreno(uiHeroRow, uiHeroCol, 0);
+        map.toggle_ocupado(uiHeroRow, uiHeroCol, false);
 
-    map.set_ocupacao_terreno(uiHeroRow, uiHeroCol, 0);
-    map.toggle_ocupado(uiHeroRow, uiHeroCol, false);
-
-    map.set_ocupacao_terreno(uiNextRow, uiNextCol, 1);
-    map.toggle_ocupado(uiHeroRow, uiHeroCol, true);
+        //preenche o novo terreno
+        map.set_ocupacao_terreno(uiNextRow, uiNextCol, 1);
+        map.toggle_ocupado(uiHeroRow, uiHeroCol, true);
+    }
+    else if (tipoOcupacao == 1) {
+        throw runtime_error("Movimento inválido.");
+    }
+    else {
+        //TODO: Chamar método de batalha
+    }
 }
 
 void CRolePlayingGame::printboard()
@@ -101,57 +97,14 @@ void CRolePlayingGame::printboard()
     }
 }
 
-bool CRolePlayingGame::HeroIsDead(int numPersonagem) { 
-    return mqHero[numPersonagem].IsDead();
-}
-
 bool CRolePlayingGame::AllMonstersDead()
 {
-    bool bAllDead = true;
-    for (unsigned int uiIndex = 0; uiIndex < 10; ++uiIndex) {
-        if(!mqaMonsters[uiIndex].IsDead()) 
-            bAllDead = false; 
-    }
-    return bAllDead;
+    return map.get_lista_personagens(false).size() == 0;
 }
 
 bool CRolePlayingGame::AllHeroesisDead()
 {
-    bool bAllDead = true;
-    for (unsigned int uiIndex = 0; uiIndex < 5; ++uiIndex) {
-        if(!mqHero[uiIndex].IsDead()) 
-            bAllDead = false; 
-    }
-    return bAllDead;
-}
-
-
-void CRolePlayingGame::RemoveDeadHeroes()
-{
-    for (unsigned int uiIndex = 0; uiIndex < 5; ++uiIndex) {
-        if (mqHero[uiIndex].IsDead()) {
-            unsigned int uiRow;
-            unsigned int uiCol;
-            if (LocateCreature(uiRow, uiCol, &(mqHero[uiIndex]))) {
-                mqpaaCreatures[uiRow][uiCol] = 0;
-                std::cout << "Heroi morreu ! " << std::endl;
-            }
-        }
-    }
-}
-
-void CRolePlayingGame::RemoveDeadMonsters()
-{
-    for (unsigned int uiIndex = 0; uiIndex < 10; ++uiIndex) {
-        if (mqaMonsters[uiIndex].IsDead()) {
-            unsigned int uiRow;
-            unsigned int uiCol;
-            if (LocateCreature(uiRow, uiCol, &(mqaMonsters[uiIndex]))) {
-                mqpaaCreatures[uiRow][uiCol] = 0;
-                std::cout << "Monstro morreu ! " << std::endl;
-            }
-        }
-    }
+    return map.get_lista_personagens(true).size() == 0;
 }
 
 bool CRolePlayingGame::TerrenoComparator(Terreno &terreno1, Terreno &terreno2) {
