@@ -5,6 +5,7 @@
 #include "mapa.h"
 #include "personagem.h"
 #include "terreno.h"
+#include "color.h"
 #include <exception>
 
 /*Esta classe controla o movimento do seu herói. 
@@ -15,6 +16,7 @@ entre eles , como mortes e posições.*/
 class CRolePlayingGame
 {
     private:
+        Color cor;
         Mapa map; //Um um objeto da classe Mapa para construir o mapa
     public:
         CRolePlayingGame();   

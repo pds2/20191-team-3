@@ -2,6 +2,7 @@
 #include <time.h>  
 #include <map>
 #include "game.h"
+#include "color.h"
 
 using namespace std;
 
@@ -80,17 +81,23 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
 
 void CRolePlayingGame::printboard()
 {
+    for(unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow){
+        for(unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol){
+            cout<< QueryLocation(uiRow, uiCol);
+        }
+        cout<<endl;
+    }
     for (unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow) {
         for (unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol) {
             int tipoOcupacao = QueryLocation(uiRow, uiCol);
             if(tipoOcupacao == 0){
-                cout << "*" << endl;
+                cout << cor.greenPrint("*");
             }
             else if(tipoOcupacao == 1){
-                cout << map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(1) << endl;
+                cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
             }
             else {
-                cout << "M" << endl;
+                cout << cor.redPrint("M");
             }
         }
         cout << endl;

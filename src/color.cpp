@@ -4,25 +4,25 @@
 using namespace std;
 
 
-void Color::redPrint(string pinta) {
-	cout << red + pinta + reset << endl;
-	return 0;
+std::string Color::redPrint(std::string pinta) {
+	return red + pinta + reset;
 }
-void Color::bluePrint(string pinta) {
-	cout << blue + pinta + reset << endl;
-	return 0;
+std::string Color::bluePrint(string pinta) {
+	return blue + pinta + reset;
 }
 
-void Color::greenPrint(string pinta) {
-	cout << green + pinta + reset << endl;
-	return 0;
+std::string Color::greenPrint(string pinta) {
+	return green + pinta + reset;
 }
 
-void Color::whitePrint(string pinta) {
-	cout << white + pinta + reset << endl;
-	return 0;
+std::string Color::whitePrint(string pinta) {
+	return white + pinta + reset;
 }
 
-void Color::yellowPrint(string pinta){
-	cout << yellow + pinta + reset << endl;
+std::string Color::yellowPrint(string pinta){
+	return yellow + pinta + reset;
+}
+
+std::string Color::BgreenPrint(std::string pinta){
+	return Bgreen + pinta + reset;
 }
