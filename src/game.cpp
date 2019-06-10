@@ -13,6 +13,8 @@ entre eles , como mortes e posições.*/
 
 CRolePlayingGame::CRolePlayingGame()
 {
+	//Seta jogo para jogando
+    gameOver = false;
     //Cria os personagens e setam eles em uma posicao aleatoria no mapa
     this->map = Mapa("mapa_ch12.txt");
 }   
@@ -112,12 +114,18 @@ void CRolePlayingGame::printboard()
 
 bool CRolePlayingGame::AllMonstersDead()
 {
-    return map.get_lista_personagens(false).size() == 0;
+    if(map.get_lista_personagens(false).size() == 0){
+        std::cout << "Você Venceu! " << std::endl;
+        this->gameOver = true;
+    }
 }
 
 bool CRolePlayingGame::AllHeroesisDead()
 {
-    return map.get_lista_personagens(true).size() == 0;
+    if(map.get_lista_personagens(true).size() == 0){
+        std::cout << "Você Perdeu! " << std::endl;
+        this->gameOver = true;
+    }
 }
 
 bool CRolePlayingGame::TerrenoComparator(Terreno &terreno1, Terreno &terreno2) {

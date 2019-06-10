@@ -29,17 +29,12 @@ int main()
                 char cMove;
                 std::cin >> cMove; 
                 if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
-                    if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
-                        cout << "Você Perdeu! " << endl;
-                        bGameOver = true;
-                    }
-                    else if (qGame.AllMonstersDead()) { 
-                        cout << "Você Venceu! " << endl;
-                        bGameOver = true;
-                    }
+                    qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
+                    
+                    qGame.AllMonstersDead(); //Se todos os Monstros forem eliminados -> Win
                 }
             }
         }
-    } while (!bGameOver);
+    } while (!qGame.gameOver);
     return 0;
 }
