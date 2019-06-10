@@ -61,7 +61,7 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
     if ((unsigned)uiNextRow > (unsigned)num_linhas || (unsigned)uiNextCol > (unsigned)num_colunas)
         return false;
 
-    int tipoOcupacao = map.GetMazeSquare(uiNextRow, uiNextRow).get_tipo_ocupado();
+    int tipoOcupacao = map.GetMazeSquare(uiNextRow, uiNextCol).get_tipo_ocupado();
     if (tipoOcupacao == 0) { //terreno destino vazio
         //esvazia o terreno atual
         map.set_ocupacao_terreno(uiHeroRow, uiHeroCol, 0);
@@ -78,7 +78,10 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
         throw runtime_error("Movimento inválido.");
     }
     else {
-        //TODO: Chamar método de batalha
+        Personagem* atacante = map.getPersonagemPorPosicao(uiHeroRow, uiHeroCol);
+        Personagem* atacado = map.getPersonagemPorPosicao(uiNextRow, uiNextCol);
+        map.Batalha(*atacante, *atacado);
+        //TODO: movimentação pós batalha
     }
 }
 
