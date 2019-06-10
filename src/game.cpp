@@ -72,6 +72,7 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
         map.toggle_ocupado(uiHeroRow, uiHeroCol, true);
 
         //setando personagem na posição correta
+        map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
     }
     else if (tipoOcupacao == 1) {
         throw runtime_error("Movimento inválido.");

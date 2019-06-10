@@ -43,6 +43,7 @@ public:
 	Personagem* getPersonagemPorPosicao(int x, int y);
 	void set_ocupacao_terreno(int x, int y, int tipoOcupacao);
 	void toggle_ocupado(int x, int y, bool ocupado);
+	void setPosPersonagem(string nome, int x, int y);
 };
 
 #endif

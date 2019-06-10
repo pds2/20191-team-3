@@ -24,7 +24,7 @@ int main()
             int qtdMovimentos = it->second->get_Move();
             for (int i = 0; i < qtdMovimentos; i++) {
                 qGame.printboard(); //Printa o mapa na tela
-                cout << " Use W, A , S ou D para mover : " << endl;
+                cout << " Use W, A , S ou D para mover o personagem " + it->first + ": " << endl;
                 // Pega a entrada do usuário
                 char cMove;
                 std::cin >> cMove; 

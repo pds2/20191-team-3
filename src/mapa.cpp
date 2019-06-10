@@ -375,3 +375,8 @@ void Mapa::toggle_ocupado(int x, int y, bool ocupado)
 {
     this->_grade[x][y].set_ocupacao(ocupado);
 }
+
+void Mapa::setPosPersonagem(string nome, int x, int y) {
+    this->_lista_personagens[nome]->set_i(x);
+    this->_lista_personagens[nome]->set_j(y);
+}
