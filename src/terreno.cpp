@@ -33,6 +33,7 @@ Terreno::Terreno(TipoTerreno terreno) //Construtor
 Terreno::Terreno(char nome) //Construtor
 {
     _ocupado = false;
+    _tipocupacao = 0;
     if (nome == 'P')
     {
         _nome = "Plain";

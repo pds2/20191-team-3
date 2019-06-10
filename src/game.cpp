@@ -70,6 +70,8 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
         //preenche o novo terreno
         map.set_ocupacao_terreno(uiNextRow, uiNextCol, 1);
         map.toggle_ocupado(uiHeroRow, uiHeroCol, true);
+
+        //setando personagem na posição correta
     }
     else if (tipoOcupacao == 1) {
         throw runtime_error("Movimento inválido.");
@@ -81,12 +83,12 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
 
 void CRolePlayingGame::printboard()
 {
-    for(unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow){
-        for(unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol){
-            cout<< QueryLocation(uiRow, uiCol);
-        }
-        cout<<endl;
-    }
+    // for(unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow){
+    //     for(unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol){
+    //         QueryLocation(uiRow, uiCol);
+    //     }
+    //     cout<<endl;
+    // }
     for (unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow) {
         for (unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol) {
             int tipoOcupacao = QueryLocation(uiRow, uiCol);

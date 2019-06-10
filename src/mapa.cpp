@@ -11,7 +11,7 @@ Mapa::Mapa(string nome) //Construtor
     {
         cout << "Carregando mapa: " << nome << endl;
         map_file >> _num_linhas >> _num_colunas;
-        cout << _num_linhas << "x" << _num_colunas << endl;
+        // cout << _num_linhas << "x" << _num_colunas << endl;
         for (int i = 0; i < _num_linhas; i++)
         {
             string linha;

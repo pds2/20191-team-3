@@ -19,15 +19,14 @@ int main()
     // Cria uma variavel de iteração se o jogo acaba ou não
     bool bGameOver = false;
     do {
-        cout << " Use W, A , S ou D para mover : " << endl;
-        qGame.printboard(); //Printa o mapa na tela
-        // Pega a entrada do usuário
-        char cMove;
         map<string, Personagem*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
         for (std::map<string, Personagem*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
             int qtdMovimentos = it->second->get_Move();
             for (int i = 0; i < qtdMovimentos; i++) {
-                
+                qGame.printboard(); //Printa o mapa na tela
+                cout << " Use W, A , S ou D para mover : " << endl;
+                // Pega a entrada do usuário
+                char cMove;
                 std::cin >> cMove; 
                 if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
                     if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
