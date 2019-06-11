@@ -17,31 +17,34 @@ int main()
     CRolePlayingGame qGame;
     
     // Cria uma variavel de iteração se o jogo acaba ou não
-    bool bGameOver = false;
+    
     do {
         map<string, Personagem*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
         for (std::map<string, Personagem*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
             int qtdMovimentos = it->second->get_Move();
-            int cont = qtdMovimentos;
-            for (int i = 0; i < qtdMovimentos; i++) {
-                qGame.printboard(); //Printa o mapa na tela
-                cout << " Use W, A , S ou D para mover o personagem " << it->first << " " << cont-- << " Vezes:"  << endl;
-                // Pega a entrada do usuário
-                char cMove;
-                std::cin >> cMove; 
+            for (int i = qtdMovimentos; i > 0; i--) {
+                char cMove = ' ';
+                do{
+                    cout << " Use W, A , S ou D para mover o personagem " + it->first + ": " << endl;
+                    cout <<" "<< i <<" movimentos restantes!\n"; // Pega a entrada do usuário
+                    qGame.printboard(it->second->get_i(), it->second->get_j()); //Printa o mapa na tela
+                    std::cin >> cMove; 
+                                            
+                }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
                 if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
-                    if (qGame.AllHeroesisDead()) { //Se todos os monstros são eliminados
-                        cout << "Você Perdeu! " << endl;
-                        bGameOver = true;
-                    }
-                    else if (qGame.AllMonstersDead()) { 
-                        cout << "Você Venceu! " << endl;
-                        bGameOver = true;
-                    }
+                    qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
+                    
+                    qGame.AllMonstersDead(); //Se todos os Monstros forem eliminados -> Win
+                    if(qGame.gameOver==1)
+                        break;
+                }else{
+                    i++;
                 }
                 //std::system("clear");
             }
+            if(qGame.gameOver==1)
+                break;
         }
-    } while (!bGameOver);
+    } while (!qGame.gameOver);
     return 0;
 }
