@@ -37,7 +37,7 @@ public:
 	int get_num_colunas();
 	Terreno GetMazeSquare(unsigned int uiRow, unsigned int uiCol); // Retorna a posição procurada no mapa
 	Personagem get_personagem(string nome);
-	bool Batalha(Personagem &Atacante, Personagem &Defensor); //Retorna true se alguém morre e false se ninguém morre
+	int Batalha(Personagem &Atacante, Personagem &Defensor); //Retorna 0 se ninguém morre, 1 se herói morre e 2 se inimigo morre
 	map<string, Personagem*> get_lista_personagens();
 	map<string, Personagem*> get_lista_personagens(bool heroi);
 	Personagem* getPersonagemPorPosicao(int x, int y);

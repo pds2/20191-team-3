@@ -254,7 +254,7 @@ Personagem *Mapa::getPersonagemPorPosicao(int x, int y)
     return NULL;
 }
 
-bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
+int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
 {
     //Gera quatro números aleatótios de 0 a 99
     //Valores de hit e crit do atacante
@@ -271,7 +271,7 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
 
     //Se ambos são do mesmo time
     if (Atacante.isPlayer() == Defensor.isPlayer())
-        return false;
+        return 0;
 
     //Bonus de triângulo de armas (Sword > Axe > Lance > Sword)
     srand(time(NULL));
@@ -315,11 +315,20 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                 Defensor.set_HP(0);
                 cout << Defensor.get_nome() << " derrotado." << endl;
                 Personagem *aux = _lista_personagens[Defensor.get_nome()];
-                _lista_personagens.erase(Defensor.get_nome());
-                delete aux;
-                _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
-                _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                return true;
+                _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(false);
+                _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(0);
+                if (Defensor.isPlayer())
+                {
+                    _lista_personagens.erase(Defensor.get_nome());
+                    delete aux;
+                    return 1;
+                }
+                else
+                {
+                    _lista_personagens.erase(Defensor.get_nome());
+                    delete aux;
+                    return 2;
+                }
             }
         }
     }
@@ -339,11 +348,20 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                 Atacante.set_HP(0);
                 cout << Atacante.get_nome() << " derrotado." << endl;
                 Personagem *aux = _lista_personagens[Atacante.get_nome()];
-                _lista_personagens.erase(Atacante.get_nome());
-                delete aux;
                 _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                 _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                return true;
+                if (Atacante.isPlayer())
+                {
+                    _lista_personagens.erase(Atacante.get_nome());
+                    delete aux;
+                    return 1;
+                }
+                else
+                {
+                    _lista_personagens.erase(Atacante.get_nome());
+                    delete aux;
+                    return 2;
+                }
             }
         }
     }
@@ -367,11 +385,20 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                     Defensor.set_HP(0);
                     cout << Defensor.get_nome() << " derrotado." << endl;
                     Personagem *aux = _lista_personagens[Defensor.get_nome()];
-                    _lista_personagens.erase(Defensor.get_nome());
-                    delete aux;
-                    _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
-                    _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                    return true;
+                    _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(false);
+                    _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(0);
+                    if (Defensor.isPlayer())
+                    {
+                        _lista_personagens.erase(Defensor.get_nome());
+                        delete aux;
+                        return 1;
+                    }
+                    else
+                    {
+                        _lista_personagens.erase(Defensor.get_nome());
+                        delete aux;
+                        return 2;
+                    }
                 }
             }
         }
@@ -395,16 +422,25 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                     Atacante.set_HP(0);
                     cout << Atacante.get_nome() << " derrotado." << endl;
                     Personagem *aux = _lista_personagens[Atacante.get_nome()];
-                    _lista_personagens.erase(Atacante.get_nome());
-                    delete aux;
                     _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                     _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                    return true;
+                    if (Atacante.isPlayer())
+                    {
+                        _lista_personagens.erase(Atacante.get_nome());
+                        delete aux;
+                        return 1;
+                    }
+                    else
+                    {
+                        _lista_personagens.erase(Atacante.get_nome());
+                        delete aux;
+                        return 2;
+                    }
                 }
             }
         }
     }
-    return false; //Se ninguém morreu
+    return 0; //Se ninguém morreu
 }
 
 void Mapa::set_ocupacao_terreno(int x, int y, int tipoOcupacao)
