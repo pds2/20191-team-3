@@ -22,12 +22,14 @@ int main()
         map<string, Personagem*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
         for (std::map<string, Personagem*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
             int qtdMovimentos = it->second->get_Move();
-            for (int i = 0; i < qtdMovimentos; i++) {
-                qGame.printboard(); //Printa o mapa na tela
-                cout << " Use W, A , S ou D para mover o personagem " + it->first + ": " << endl;
-                // Pega a entrada do usuário
-                char cMove;
-                std::cin >> cMove; 
+            for (int i = qtdMovimentos; i > 0; i--) {
+                char cMove = ' ';
+                do{
+                    cout << " Use W, A , S ou D para mover o personagem " + it->first + ": " << endl;
+                    cout <<" "<< i <<" movimentos restantes!\n"; // Pega a entrada do usuário
+                    qGame.printboard(it->second->get_i(), it->second->get_j()); //Printa o mapa na tela
+                    std::cin >> cMove; } 
+                while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
                 if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
                     qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
                     

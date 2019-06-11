@@ -93,7 +93,7 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
     }
 }
 
-void CRolePlayingGame::printboard()
+void CRolePlayingGame::printboard(int _i, int _j)
 {
     // for(unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow){
     //     for(unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol){
@@ -108,7 +108,12 @@ void CRolePlayingGame::printboard()
                 cout << cor.greenPrint("*");
             }
             else if(tipoOcupacao == 1){
-                cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
+                if(uiRow == _i && uiCol == _j){
+                    cout << cor.BbluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
+                }else{
+                    cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
+                }
+                
             }
             else if(tipoOcupacao == 2){
                 cout << cor.redPrint("M");
