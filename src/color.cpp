@@ -23,7 +23,6 @@ std::string Color::yellowPrint(string pinta){
 	return yellow + pinta + reset;
 }
 
-std::string Color::BbluePrint(std::string pinta){
-	return Bblue + pinta + reset;
+std::string Color::BgreenPrint(std::string pinta){
+	return Bgreen + pinta + reset;
 }
-

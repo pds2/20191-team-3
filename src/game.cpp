@@ -13,8 +13,6 @@ entre eles , como mortes e posições.*/
 
 CRolePlayingGame::CRolePlayingGame()
 {
-	//Seta jogo para jogando
-    gameOver = false;
     //Cria os personagens e setam eles em uma posicao aleatoria no mapa
     this->map = Mapa("mapa_ch12.txt");
 }   
@@ -54,20 +52,13 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
             --uiNextCol;
             break;
         }
-        case 'i':
-        case 'I': {
-            personagem.imprime_status();
-            return false;
-            break;
-        }
-
         default: {
             return false;
         }
     }
     
     // Trata o tamanho do mapa diponivel
-    if ((unsigned)uiNextRow >= (unsigned)num_linhas || (unsigned)uiNextCol >= (unsigned)num_colunas)
+    if ((unsigned)uiNextRow > (unsigned)num_linhas || (unsigned)uiNextCol > (unsigned)num_colunas)
         return false;
 
     int tipoOcupacao = map.GetMazeSquare(uiNextRow, uiNextCol).get_tipo_ocupado();
@@ -84,17 +75,18 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
         map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
     }
     else if (tipoOcupacao == 1) {
-        cout<<"Movimento inválido."<<endl;
-        return false;
+        cout << "Movimento inválido." << endl;
     }
     else {
         Personagem* atacante = map.getPersonagemPorPosicao(uiHeroRow, uiHeroCol);
         Personagem* atacado = map.getPersonagemPorPosicao(uiNextRow, uiNextCol);
-        
-        bool retorno=map.Batalha(*atacante, *atacado);
-        if(retorno==true)
-        {
-            map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
+        int retorno = map.Batalha(*atacante, *atacado);
+        cout << "Cheguei aqui desgraça" << endl;
+        cout << retorno << endl;
+        if(retorno == 1){
+             map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
+        }else{
+            return false;
         }
 
         //TODO: movimentação pós batalha
@@ -102,7 +94,7 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
     return true;
 }
 
-void CRolePlayingGame::printboard(int _i, int _j)
+void CRolePlayingGame::printboard()
 {
     // for(unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow){
     //     for(unsigned int uiCol = 0; uiCol < (unsigned)map.get_num_colunas(); ++uiCol){
@@ -117,14 +109,9 @@ void CRolePlayingGame::printboard(int _i, int _j)
                 cout << cor.greenPrint("*");
             }
             else if(tipoOcupacao == 1){
-                if(uiRow == (unsigned)_i && uiCol == (unsigned)_j){
-                    cout << cor.BbluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
-                }else{
-                    cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
-                }
-                
+                cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
             }
-            else if(tipoOcupacao == 2){
+            else {
                 cout << cor.redPrint("M");
             }
         }
@@ -132,20 +119,14 @@ void CRolePlayingGame::printboard(int _i, int _j)
     }
 }
 
-void CRolePlayingGame::AllMonstersDead()
+bool CRolePlayingGame::AllMonstersDead()
 {
-    if(map.get_lista_personagens(false).size() == 0){
-        std::cout << "Você Venceu! " << std::endl;
-        this->gameOver = true;
-    }
+    return map.get_lista_personagens(false).size() == 0;
 }
 
-void CRolePlayingGame::AllHeroesisDead()
+bool CRolePlayingGame::AllHeroesisDead()
 {
-    if(map.get_lista_personagens(true).size() == 0){
-        std::cout << "Você Perdeu! " << std::endl;
-        this->gameOver = true;
-    }
+    return map.get_lista_personagens(true).size() == 0;
 }
 
 bool CRolePlayingGame::TerrenoComparator(Terreno &terreno1, Terreno &terreno2) {
