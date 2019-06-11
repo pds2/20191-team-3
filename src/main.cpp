@@ -22,9 +22,10 @@ int main()
         map<string, Personagem*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
         for (std::map<string, Personagem*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
             int qtdMovimentos = it->second->get_Move();
+            int cont = qtdMovimentos;
             for (int i = 0; i < qtdMovimentos; i++) {
                 qGame.printboard(); //Printa o mapa na tela
-                cout << " Use W, A , S ou D para mover o personagem " + it->first + ": " << endl;
+                cout << " Use W, A , S ou D para mover o personagem " << it->first << " " << cont-- << " Vezes:"  << endl;
                 // Pega a entrada do usuário
                 char cMove;
                 std::cin >> cMove; 
@@ -38,6 +39,7 @@ int main()
                         bGameOver = true;
                     }
                 }
+                //std::system("clear");
             }
         }
     } while (!bGameOver);

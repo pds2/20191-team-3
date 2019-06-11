@@ -252,7 +252,7 @@ Personagem *Mapa::getPersonagemPorPosicao(int x, int y)
     return NULL;
 }
 
-void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
+int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
 {
     //Gera quatro números aleatótios de 0 a 99
     //Valores de hit e crit do atacante
@@ -268,10 +268,10 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     Terreno tD = GetMazeSquare(Defensor.get_i(), Defensor.get_j());
 
     //Primeiro ataque
-    if (hitA > Atacante.Hit() - Defensor.Avo() - tD.get_avoid())
+    if ((unsigned)hitA > (unsigned)Atacante.Hit() - (unsigned)Defensor.Avo() - (unsigned)tD.get_avoid())
     {
         int dano;
-        if (critA > Atacante.Crit())
+        if ((unsigned)critA > (unsigned)Atacante.Crit())
             dano = (Atacante.Atk() - Defensor.get_Def() - tD.get_defense()) * 3;
         else
             dano = Atacante.Atk() - Defensor.get_Def() - tD.get_defense();
@@ -285,15 +285,18 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                 _lista_personagens.erase(Defensor.get_nome());
                 _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                 _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                return;
+
+                _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(true);
+                _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(1);
+                return 1;
             }
         }
     }
     //Contra-ataque
-    if (hitD > Defensor.Hit() - Atacante.Avo() - tA.get_avoid())
+    if ((unsigned)hitD > (unsigned)Defensor.Hit() - (unsigned)Atacante.Avo() - (unsigned)tA.get_avoid())
     {
         int dano;
-        if (critD > Atacante.Crit())
+        if ((unsigned)critD > (unsigned)Atacante.Crit())
             dano = (Defensor.Atk() - Atacante.get_Def() - tA.get_defense()) * 3;
         else
             dano = Defensor.Atk() - Atacante.get_Def() - tA.get_defense();
@@ -307,7 +310,7 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                 _lista_personagens.erase(Atacante.get_nome());
                 _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                 _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                return;
+                return 2;
             }
         }
     }
@@ -316,10 +319,10 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     {
         hitA = rand() % 100;
         critA = rand() % 100;
-        if (hitA > Atacante.Hit() - Defensor.Avo() - tD.get_avoid())
+        if ((unsigned)hitA > (unsigned)Atacante.Hit() - (unsigned)Defensor.Avo() - (unsigned)tD.get_avoid())
         {
             int dano;
-            if (critA > Atacante.Crit())
+            if ((unsigned)critA > (unsigned)Atacante.Crit())
                 dano = (Atacante.Atk() - Defensor.get_Def() - tD.get_defense()) * 3;
             else
                 dano = Atacante.Atk() - Defensor.get_Def() - tD.get_defense();
@@ -333,7 +336,10 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                     _lista_personagens.erase(Defensor.get_nome());
                     _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                     _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                    return;
+
+                    _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(true);
+                    _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(1);
+                    return 1;
                 }
             }
         }
@@ -342,10 +348,10 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     {
         hitD = rand() % 100;
         critD = rand() % 100;
-        if (hitD > Defensor.Hit() - Atacante.Avo() - tA.get_avoid())
+        if ((unsigned)hitD > (unsigned)Defensor.Hit() - (unsigned)Atacante.Avo() - (unsigned)tA.get_avoid())
         {
             int dano;
-            if (critD > Atacante.Crit())
+            if ((unsigned)critD > (unsigned)Atacante.Crit())
                 dano = (Defensor.Atk() - Atacante.get_Def() - tA.get_defense()) * 3;
             else
                 dano = Defensor.Atk() - Atacante.get_Def() - tA.get_defense();
@@ -359,11 +365,12 @@ void Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                     _lista_personagens.erase(Atacante.get_nome());
                     _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                     _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
-                    return;
+                    return 2;
                 }
             }
         }
     }
+    return 0;
 }
 
 void Mapa::set_ocupacao_terreno(int x, int y, int tipoOcupacao)

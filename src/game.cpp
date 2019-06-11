@@ -75,14 +75,23 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
         map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
     }
     else if (tipoOcupacao == 1) {
-        throw runtime_error("Movimento inválido.");
+        cout << "Movimento inválido." << endl;
     }
     else {
         Personagem* atacante = map.getPersonagemPorPosicao(uiHeroRow, uiHeroCol);
         Personagem* atacado = map.getPersonagemPorPosicao(uiNextRow, uiNextCol);
-        map.Batalha(*atacante, *atacado);
+        int retorno = map.Batalha(*atacante, *atacado);
+        cout << "Cheguei aqui desgraça" << endl;
+        cout << retorno << endl;
+        if(retorno == 1){
+             map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
+        }else{
+            return false;
+        }
+
         //TODO: movimentação pós batalha
     }
+    return true;
 }
 
 void CRolePlayingGame::printboard()
