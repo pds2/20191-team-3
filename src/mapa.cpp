@@ -258,6 +258,7 @@ int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
 {
     //Gera quatro números aleatótios de 0 a 99
     //Valores de hit e crit do atacante
+    srand(time(NULL));
     int hitA = rand() % 100;
     int critA = rand() % 100;
 
@@ -274,7 +275,6 @@ int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         return 0;
 
     //Bonus de triângulo de armas (Sword > Axe > Lance > Sword)
-    srand(time(NULL));
     int bonusA = Atacante.Hit();
     int bonusD = Defensor.Hit();
     string tipo_arma_A = Atacante.Arma_Equipada().get_tipo();
