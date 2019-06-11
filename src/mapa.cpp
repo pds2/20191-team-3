@@ -303,7 +303,7 @@ int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
     {
         int dano;
-        if (critA > Atacante.Crit())
+        if (critA < Atacante.Crit())
             dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 3;
         else
             dano = Atacante.Atk() - defesaD - tD.get_defense();
@@ -336,7 +336,7 @@ int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
     {
         int dano;
-        if (critD > Atacante.Crit())
+        if (critD < Atacante.Crit())
             dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 3;
         else
             dano = Defensor.Atk() - defesaA - tA.get_defense();
@@ -373,7 +373,7 @@ int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
         {
             int dano;
-            if (critA > Atacante.Crit())
+            if (critA < Atacante.Crit())
                 dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 3;
             else
                 dano = Atacante.Atk() - defesaD - tD.get_defense();
@@ -410,7 +410,7 @@ int Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
         {
             int dano;
-            if (critD > Atacante.Crit())
+            if (critD < Atacante.Crit())
                 dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 3;
             else
                 dano = Defensor.Atk() - defesaA - tA.get_defense();
