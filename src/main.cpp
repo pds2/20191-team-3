@@ -17,7 +17,7 @@ int main()
     CRolePlayingGame qGame;
     
     // Cria uma variavel de iteração se o jogo acaba ou não
-    bool bGameOver = false;
+    
     do {
         map<string, Personagem*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
         for (std::map<string, Personagem*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
