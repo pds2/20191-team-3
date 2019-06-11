@@ -1,3 +1,4 @@
+#include <time.h>
 #include "mapa.h"
 
 Mapa::Mapa() {}
@@ -268,7 +269,12 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     Terreno tA = GetMazeSquare(Atacante.get_i(), Atacante.get_j());
     Terreno tD = GetMazeSquare(Defensor.get_i(), Defensor.get_j());
 
+    //Se ambos são do mesmo time
+    if (Atacante.isPlayer() == Defensor.isPlayer())
+        return false;
+
     //Bonus de triângulo de armas (Sword > Axe > Lance > Sword)
+    srand(time(NULL));
     int bonusA = Atacante.Hit();
     int bonusD = Defensor.Hit();
     string tipo_arma_A = Atacante.Arma_Equipada().get_tipo();
@@ -292,10 +298,6 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         defesaA = Atacante.get_Res();
     else
         defesaA = Atacante.get_Def();
-
-    //Se ambos são do mesmo time
-    if (Atacante.isPlayer() == Defensor.isPlayer())
-        return false;
 
     //Primeiro ataque
     if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
