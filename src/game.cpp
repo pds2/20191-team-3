@@ -82,7 +82,13 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
     else {
         Personagem* atacante = map.getPersonagemPorPosicao(uiHeroRow, uiHeroCol);
         Personagem* atacado = map.getPersonagemPorPosicao(uiNextRow, uiNextCol);
-        map.Batalha(*atacante, *atacado);
+        
+        bool retorno=map.Batalha(*atacante, *atacado);
+        if(retorno==true)
+        {
+            map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
+        }
+
         //TODO: movimentação pós batalha
     }
 }
@@ -104,7 +110,7 @@ void CRolePlayingGame::printboard()
             else if(tipoOcupacao == 1){
                 cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
             }
-            else {
+            else if(tipoOcupacao == 2){
                 cout << cor.redPrint("M");
             }
         }
