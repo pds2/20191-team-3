@@ -28,14 +28,21 @@ int main()
                     cout << " Use W, A , S ou D para mover o personagem " + it->first + ": " << endl;
                     cout <<" "<< i <<" movimentos restantes!\n"; // Pega a entrada do usuário
                     qGame.printboard(it->second->get_i(), it->second->get_j()); //Printa o mapa na tela
-                    std::cin >> cMove; } 
-                while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
+                    std::cin >> cMove; 
+                                            
+                }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
                 if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
                     qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
                     
                     qGame.AllMonstersDead(); //Se todos os Monstros forem eliminados -> Win
+                    if(qGame.gameOver==1)
+                        break;
+                }else{
+                    i++;
                 }
             }
+            if(qGame.gameOver==1)
+                break;
         }
     } while (!qGame.gameOver);
     return 0;

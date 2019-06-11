@@ -54,13 +54,20 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
             --uiNextCol;
             break;
         }
+        case 'i':
+        case 'I': {
+            personagem.imprime_status();
+            return false;
+            break;
+        }
+
         default: {
             return false;
         }
     }
     
     // Trata o tamanho do mapa diponivel
-    if ((unsigned)uiNextRow > (unsigned)num_linhas || (unsigned)uiNextCol > (unsigned)num_colunas)
+    if ((unsigned)uiNextRow >= (unsigned)num_linhas || (unsigned)uiNextCol >= (unsigned)num_colunas)
         return false;
 
     int tipoOcupacao = map.GetMazeSquare(uiNextRow, uiNextCol).get_tipo_ocupado();
@@ -77,7 +84,8 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
         map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
     }
     else if (tipoOcupacao == 1) {
-        throw runtime_error("Movimento inválido.");
+        cout<<"Movimento inválido."<<endl;
+        return false;
     }
     else {
         Personagem* atacante = map.getPersonagemPorPosicao(uiHeroRow, uiHeroCol);
@@ -91,6 +99,7 @@ bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
 
         //TODO: movimentação pós batalha
     }
+    return true;
 }
 
 void CRolePlayingGame::printboard(int _i, int _j)
@@ -108,7 +117,7 @@ void CRolePlayingGame::printboard(int _i, int _j)
                 cout << cor.greenPrint("*");
             }
             else if(tipoOcupacao == 1){
-                if(uiRow == _i && uiCol == _j){
+                if(uiRow == (unsigned)_i && uiCol == (unsigned)_j){
                     cout << cor.BbluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
                 }else{
                     cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
