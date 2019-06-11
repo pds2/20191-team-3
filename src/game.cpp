@@ -112,7 +112,7 @@ void CRolePlayingGame::printboard()
     }
 }
 
-bool CRolePlayingGame::AllMonstersDead()
+void CRolePlayingGame::AllMonstersDead()
 {
     if(map.get_lista_personagens(false).size() == 0){
         std::cout << "Você Venceu! " << std::endl;
@@ -120,7 +120,7 @@ bool CRolePlayingGame::AllMonstersDead()
     }
 }
 
-bool CRolePlayingGame::AllHeroesisDead()
+void CRolePlayingGame::AllHeroesisDead()
 {
     if(map.get_lista_personagens(true).size() == 0){
         std::cout << "Você Perdeu! " << std::endl;
