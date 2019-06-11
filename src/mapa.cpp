@@ -259,6 +259,7 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
 {
     //Gera quatro números aleatótios de 0 a 99
     //Valores de hit e crit do atacante
+    srand(time(NULL));
     int hitA = rand() % 100;
     int critA = rand() % 100;
 
@@ -275,20 +276,21 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         return false;
 
     //Bonus de triângulo de armas (Sword > Axe > Lance > Sword)
-    srand(time(NULL));
     int bonusA = Atacante.Hit();
     int bonusD = Defensor.Hit();
     string tipo_arma_A = Atacante.Arma_Equipada().get_tipo();
     string tipo_arma_D = Defensor.Arma_Equipada().get_tipo();
     if ((tipo_arma_A == "Sword" && tipo_arma_D == "Axe") || (tipo_arma_A == "Lance" && tipo_arma_D == "Sword") || (tipo_arma_A == "Axe" && tipo_arma_D == "Lance"))
     {
-        bonusA += 4;
+        bonusA += 10;
     }
     else if ((tipo_arma_D == "Sword" && tipo_arma_A == "Axe") || (tipo_arma_D == "Lance" && tipo_arma_A == "Sword") || (tipo_arma_D == "Axe" && tipo_arma_A == "Lance"))
     {
-        bonusD += 4;
+        bonusD += 10;
     }
 
+    //Para tomos, ataques causam dano em cima da Resistência
+    //Para as outras armas o dano é em cima da Defesa
     int defesaA, defesaD;
     if (Atacante.Arma_Equipada().get_tipo() == "Tome")
         defesaD = Defensor.get_Res();
@@ -304,19 +306,19 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
     {
         int dano;
-        if (critA > Atacante.Crit())
+        if (critA < Atacante.Crit())
             dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 3;
         else
             dano = Atacante.Atk() - defesaD - tD.get_defense();
         if (dano > 0)
         {
             int HP = Defensor.get_HP() - dano;
-            cout << Atacante.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+            cout << Atacante.get_nome() << " aplicou " << dano << " pontos de dano!" << endl;
             if (HP <= 0) //Se defensor morreu
             {
                 Defensor.set_HP(0);
                 cout << Defensor.get_nome() << " derrotado." << endl;
-                
+
                 _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                 _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
@@ -333,25 +335,24 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
     if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
     {
         int dano;
-        if (critD > Atacante.Crit())
+        if (critD < Atacante.Crit())
             dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 2;
         else
             dano = Defensor.Atk() - defesaA - tA.get_defense();
         if (dano > 0)
         {
             int HP = Atacante.get_HP() - dano;
-            cout << Defensor.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+            cout << Defensor.get_nome() << " aplicou " << dano << " pontos de dano!" << endl;
             if (HP <= 0) //Se atacante morreu
             {
                 Atacante.set_HP(0);
                 cout << Atacante.get_nome() << " derrotado." << endl;
-                
-                
+
                 _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                 _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
                 _lista_personagens.erase(Atacante.get_nome());
-                
+
                 return true;
             }
         }
@@ -364,21 +365,20 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
         {
             int dano;
-            if (critA > Atacante.Crit())
-                dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 2;
+            if (critA < Atacante.Crit())
+                dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 3;
             else
                 dano = Atacante.Atk() - defesaD - tD.get_defense();
             if (dano > 0)
             {
                 int HP = Defensor.get_HP() - dano;
-                cout << Atacante.get_nome() <<" aplicou um double attack!" <<endl;
-                cout << Atacante.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+                cout << Atacante.get_nome() << " aplicou um double attack!" << endl;
+                cout << Atacante.get_nome() << " aplicou " << dano << " pontos de dano!" << endl;
                 if (HP <= 0) //Se defensor morreu
                 {
                     Defensor.set_HP(0);
                     cout << Defensor.get_nome() << " derrotado." << endl;
-                    
-                    
+
                     _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
                     _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
@@ -386,7 +386,7 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                     _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(1);
 
                     _lista_personagens.erase(Defensor.get_nome());
-                    
+
                     return true;
                 }
             }
@@ -399,8 +399,8 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
         {
             int dano;
-            if (critD > Atacante.Crit())
-                dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 3;
+            if (critD < Atacante.Crit())
+                dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 2;
             else
                 dano = Defensor.Atk() - defesaA - tA.get_defense();
             if (dano > 0)
@@ -415,7 +415,7 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
                     _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
                     _lista_personagens.erase(Atacante.get_nome());
-                   
+
                     return true;
                 }
             }
