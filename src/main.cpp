@@ -40,7 +40,6 @@ int main()
                 }else{
                     i++;
                 }
-                //std::system("clear");
             }
             if(qGame.gameOver==1)
                 break;
