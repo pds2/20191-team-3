@@ -313,6 +313,8 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         if (dano > 0)
         {
             int HP = Defensor.get_HP() - dano;
+            if (HP > 0)
+                Defensor.set_HP(HP);
             cout << Atacante.get_nome() << " aplicou " << dano << " pontos de dano!" << endl;
             if (HP <= 0) //Se defensor morreu
             {
@@ -342,6 +344,8 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
         if (dano > 0)
         {
             int HP = Atacante.get_HP() - dano;
+            if (HP > 0)
+                Atacante.set_HP(HP);
             cout << Defensor.get_nome() << " aplicou " << dano << " pontos de dano!" << endl;
             if (HP <= 0) //Se atacante morreu
             {
@@ -372,6 +376,8 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
             if (dano > 0)
             {
                 int HP = Defensor.get_HP() - dano;
+                if (HP > 0)
+                    Defensor.set_HP(HP);
                 cout << Atacante.get_nome() << " aplicou um double attack!" << endl;
                 cout << Atacante.get_nome() << " aplicou " << dano << " pontos de dano!" << endl;
                 if (HP <= 0) //Se defensor morreu
@@ -406,6 +412,10 @@ bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
             if (dano > 0)
             {
                 int HP = Atacante.get_HP() - dano;
+                if (HP > 0)
+                    Atacante.set_HP(HP);
+                cout << Defensor.get_nome() << " aplicou um double attack!" << endl;
+                cout << Defensor.get_nome() << " aplicou " << dano << " pontos de dano!" << endl;
                 if (HP <= 0) //Se atacante morreu
                 {
                     Atacante.set_HP(0);
