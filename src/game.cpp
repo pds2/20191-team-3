@@ -24,84 +24,6 @@ int CRolePlayingGame::QueryLocation(unsigned int uiRow, unsigned int uiCol)
     return map.GetMazeSquare(uiRow, uiCol).get_tipo_ocupado();
 }
 
-bool CRolePlayingGame::MoveHero(char const kcDirection, string nomePersonagem)
-{
-    int num_linhas = map.get_num_linhas();
-    int num_colunas = map.get_num_colunas();
-    Personagem personagem = map.get_personagem(nomePersonagem);
-    unsigned int uiHeroRow = personagem.get_i();
-    unsigned int uiHeroCol = personagem.get_j();
-    unsigned int uiNextRow = uiHeroRow;
-    unsigned int uiNextCol = uiHeroCol;
-    switch (kcDirection) {
-        case 'w':
-        case 'W': {
-            --uiNextRow;
-            break;
-        }
-        case 'd':
-        case 'D': {
-            ++uiNextCol;
-            break;
-        }
-        case 's':
-        case 'S': {
-            ++uiNextRow;
-            break;
-        }
-        case 'a':
-        case 'A': {
-            --uiNextCol;
-            break;
-        }
-        case 'i':
-        case 'I': {
-            personagem.imprime_status();
-            return false;
-            break;
-        }
-
-        default: {
-            return false;
-        }
-    }
-    
-    // Trata o tamanho do mapa diponivel
-    if ((unsigned)uiNextRow >= (unsigned)num_linhas || (unsigned)uiNextCol >= (unsigned)num_colunas)
-        return false;
-
-    int tipoOcupacao = map.GetMazeSquare(uiNextRow, uiNextCol).get_tipo_ocupado();
-    if (tipoOcupacao == 0) { //terreno destino vazio
-        //esvazia o terreno atual
-        map.set_ocupacao_terreno(uiHeroRow, uiHeroCol, 0);
-        map.toggle_ocupado(uiHeroRow, uiHeroCol, false);
-
-        //preenche o novo terreno
-        map.set_ocupacao_terreno(uiNextRow, uiNextCol, 1);
-        map.toggle_ocupado(uiHeroRow, uiHeroCol, true);
-
-        //setando personagem na posição correta
-        map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
-    }
-    else if (tipoOcupacao == 1) {
-        cout<<"Movimento inválido."<<endl;
-        return false;
-    }
-    else {
-        Personagem* atacante = map.getPersonagemPorPosicao(uiHeroRow, uiHeroCol);
-        Personagem* atacado = map.getPersonagemPorPosicao(uiNextRow, uiNextCol);
-        
-        bool retorno=map.Batalha(*atacante, *atacado);
-        if(retorno==true)
-        {
-            map.setPosPersonagem(nomePersonagem, uiNextRow, uiNextCol);
-        }
-
-        //TODO: movimentação pós batalha
-    }
-    return true;
-}
-
 void CRolePlayingGame::printboard(int _i, int _j)
 {
     // for(unsigned int uiRow = 0; uiRow < (unsigned)map.get_num_linhas(); ++uiRow){
@@ -118,9 +40,9 @@ void CRolePlayingGame::printboard(int _i, int _j)
             }
             else if(tipoOcupacao == 1){
                 if(uiRow == (unsigned)_i && uiCol == (unsigned)_j){
-                    cout << cor.BbluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
+                    cout << cor.BbluePrint(map.getHeroiPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
                 }else{
-                    cout << cor.bluePrint(map.getPersonagemPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
+                    cout << cor.bluePrint(map.getHeroiPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
                 }
                 
             }

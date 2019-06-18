@@ -48,7 +48,7 @@ void Mapa::cria_lista_personagens()
             string nome, classe;
             int hp, str, skl, spd, lck, def, res;
             infile >> nome >> classe >> hp >> str >> skl >> spd >> lck >> def >> res;
-            Personagem *p = new Personagem(nome, classe, hp, str, skl, spd, lck, def, res, true);
+            Heroi *p = new Heroi(nome, classe, hp, str, skl, spd, lck, def, res, true);
             unsigned int rng_i, rng_j;
             do
             {
@@ -120,7 +120,7 @@ void Mapa::cria_lista_personagens()
                 p->Add_Arma(a1);
                 p->Add_Arma(a2);
             }
-            _lista_personagens.insert(pair<string, Personagem *>(p->get_nome(), p));
+            _lista_personagens.insert(pair<string, Heroi *>(p->get_nome(), p));
             _grade[p->get_i()][p->get_j()].set_ocupacao(true);
             _grade[p->get_i()][p->get_j()].set_tipo_ocupacao(1);
         }
@@ -132,7 +132,7 @@ void Mapa::cria_lista_personagens()
             string nome, classe;
             int hp, str, skl, spd, lck, def, res;
             infile >> nome >> classe >> hp >> str >> skl >> spd >> lck >> def >> res;
-            Personagem *p = new Personagem(nome, classe, hp, str, skl, spd, lck, def, res, false);
+            Heroi *p = new Heroi(nome, classe, hp, str, skl, spd, lck, def, res, false);
             unsigned int rng_i, rng_j;
             do
             {
@@ -182,7 +182,7 @@ void Mapa::cria_lista_personagens()
                 Arma a = Arma("Steel Axe");
                 p->Add_Arma(a);
             }
-            _lista_personagens.insert(pair<string, Personagem *>(p->get_nome(), p));
+            _lista_personagens.insert(pair<string, Heroi *>(p->get_nome(), p));
             _grade[p->get_i()][p->get_j()].set_ocupacao(true);
             _grade[p->get_i()][p->get_j()].set_tipo_ocupacao(2);
         }
@@ -205,7 +205,7 @@ void Mapa::imprime_personagem(string nome)
     _lista_personagens[nome]->imprime_status();
 }
 
-Personagem Mapa::get_personagem(string nome)
+Heroi Mapa::get_personagem(string nome)
 {
     return *_lista_personagens[nome];
 }
@@ -225,16 +225,16 @@ Terreno Mapa::GetMazeSquare(unsigned int uiRow, unsigned int uiCol)
     return _grade[uiRow][uiCol];
 }
 
-map<string, Personagem *> Mapa::get_lista_personagens()
+map<string, Heroi *> Mapa::get_lista_personagens()
 {
     return this->_lista_personagens;
 }
 
-map<string, Personagem *> Mapa::get_lista_personagens(bool heroi)
+map<string, Heroi *> Mapa::get_lista_personagens(bool heroi)
 {
-    std::map<string, Personagem *> personagensAux;
+    std::map<string, Heroi *> personagensAux;
 
-    for (std::map<string, Personagem *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
+    for (std::map<string, Heroi *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
     {
         if (it->second->isPlayer() == heroi)
             personagensAux.insert(make_pair(it->first, it->second));
@@ -243,9 +243,9 @@ map<string, Personagem *> Mapa::get_lista_personagens(bool heroi)
     return personagensAux;
 }
 
-Personagem *Mapa::getPersonagemPorPosicao(int x, int y)
+Heroi *Mapa::getHeroiPorPosicao(int x, int y)
 {
-    for (std::map<string, Personagem *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
+    for (std::map<string, Heroi *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
     {
         if (it->second->get_i() == x && it->second->get_j() == y)
             return it->second;
@@ -255,7 +255,7 @@ Personagem *Mapa::getPersonagemPorPosicao(int x, int y)
     return NULL;
 }
 
-bool Mapa::Batalha(Personagem &Atacante, Personagem &Defensor)
+bool Mapa::Batalha(Heroi &Atacante, Heroi &Defensor)
 {
     //Gera quatro números aleatótios de 0 a 99
     //Valores de hit e crit do atacante
@@ -434,7 +434,7 @@ void Mapa::toggle_ocupado(int x, int y, bool ocupado)
     this->_grade[x][y].set_ocupacao(ocupado);
 }
 
-void Mapa::setPosPersonagem(string nome, int x, int y)
+void Mapa::setPosHeroi(string nome, int x, int y)
 {
     this->_lista_personagens[nome]->set_i(x);
     this->_lista_personagens[nome]->set_j(y);

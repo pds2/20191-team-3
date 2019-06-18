@@ -4,6 +4,7 @@
 
 #include "mapa.h"
 #include "personagem.h"
+#include "heroi.h"
 #include "terreno.h"
 #include "color.h"
 #include <exception>
@@ -22,7 +23,6 @@ class CRolePlayingGame
         bool gameOver;
         CRolePlayingGame();   
         int QueryLocation(unsigned int uiRow, unsigned int uiCol); // Retorna na matriz de terrenos o tipo de ocupação da posição desejada
-        bool MoveHero(char const kcDirection, string numPersonagem); // Move o personagem no mapa respeitando as condições
         void printboard(int _i, int _j); // Printa os valores retonado por QueryLocation() 
         void AllMonstersDead(); // Verifica se todos os monstros ja foram derrotados 
         void AllHeroesisDead();

@@ -2,6 +2,7 @@
 
 #include "game.h"
 #include "color.h"
+#include "heroi.h"
 
 /* Cria o programa principal que chama as várias classes 
 e funções e interage com o utilizador . Aqui controla vários aspectos do jogo */
@@ -19,8 +20,8 @@ int main()
     // Cria uma variavel de iteração se o jogo acaba ou não
     
     do {
-        map<string, Personagem*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
-        for (std::map<string, Personagem*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
+        map<string, Heroi*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
+        for (std::map<string, Heroi*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
             int qtdMovimentos = it->second->get_Move();
             for (int i = qtdMovimentos; i > 0; i--) {
                 char cMove = ' ';
@@ -31,7 +32,7 @@ int main()
                     std::cin >> cMove; 
                                             
                 }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
-                if (qGame.MoveHero(cMove, it->first)) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
+                if (true/*qGame.MoveHero(cMove, it->first)*/) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
                     qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
                     
                     qGame.AllMonstersDead(); //Se todos os Monstros forem eliminados -> Win
