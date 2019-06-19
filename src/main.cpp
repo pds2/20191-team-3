@@ -31,9 +31,13 @@ int main()
                     qGame.printboard(it->second->get_i(), it->second->get_j()); //Printa o mapa na tela
                     std::cin >> cMove; 
                                             
-                }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
-                if (cMove == 'i' || cMove == 'I') {
-                    it->second->imprime_status();
+                }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i' && cMove != 'p');
+                if (cMove == 'i' || cMove == 'I' || cMove == 'p' || cMove == 'P') {
+                    if(cMove == 'p' || cMove == 'P'){
+                        it->second->imprime_status();
+                    }else{
+                        it->second->imprime_inventario();
+                    }
                     i++;
                 }
                 else {
@@ -46,16 +50,21 @@ int main()
                     }
                     else if (validacaoMovimentacao == 2) {
                         qGame.Batalha(it->first, linhaDestino, colunaDestino);
+                        
                         qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
                         qGame.AllMonstersDead(); //Se todos os Monstros forem eliminados -> Win
-                        if (qGame.gameOver==1)
-                            break;
                     }
                     else {
+                        qGame.MoveInv();
+                        i++;
                         //tratar exceções (movimento inválido)
                     }
                 }
+                if (qGame.gameOver==1)
+                            break;
             }
+            if (qGame.gameOver==1)
+                            break;
         }
         qGame.MovimentarMonstros();
     } while (!qGame.gameOver);

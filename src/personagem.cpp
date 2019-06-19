@@ -240,8 +240,9 @@ void Personagem::imprime_status() const
          << "Def: " << get_Def() << " Res: " << get_Res() << endl;
 }
 
-void Personagem::imprime_iventario() const
+void Personagem::imprime_inventario() const
 {
+    cout<<"Equipado: "<<Arma_Equipada().get_nome() << endl;
     for (unsigned int i = 0; i < _iventario_arma.size(); i++)
         cout << _iventario_arma[i].get_nome() << endl;
     cout << "Potion" << endl

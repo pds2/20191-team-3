@@ -217,7 +217,7 @@ void CRolePlayingGame::AddArmasPersonagem(Monstro &p) {
 void CRolePlayingGame::AllMonstersDead()
 {
     if(_lista_monstros.size() == 0){
-        std::cout << "Você Venceu! " << std::endl;
+        cout<<cor.yellowPrint("\nVoce Venceu!!\n");
         this->gameOver = true;
     }
 }
@@ -225,7 +225,7 @@ void CRolePlayingGame::AllMonstersDead()
 void CRolePlayingGame::AllHeroesisDead()
 {
     if(_lista_herois.size() == 0){
-        std::cout << "Você Perdeu! " << std::endl;
+        cout<<cor.redPrint("\nVocê Perdeu! \n");
         this->gameOver = true;
     }
 }
@@ -250,17 +250,7 @@ map<string, Monstro *> CRolePlayingGame::get_lista_monstros()
     return this->_lista_monstros;
 }
 
-Heroi *CRolePlayingGame::getHeroiPorPosicao(int x, int y)
-{
-    for (std::map<string, Heroi *>::iterator it = this->_lista_herois.begin(); it != this->_lista_herois.end(); it++)
-    {
-        if (it->second->get_i() == x && it->second->get_j() == y)
-            return it->second;
-    }
 
-    throw runtime_error("Nenhum personagem na posição.");
-    return NULL;
-}
 
 bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
 {
@@ -306,7 +296,7 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
         defesaA = Atacante->get_Def();
 
     //Primeiro ataque
-    if (hitA < bonusA - Defensor->Avo() - tD.get_avoid())
+    if (hitA < (bonusA - Defensor->Avo() - tD.get_avoid()))
     {
         int dano;
         if (critA > Atacante->Crit())
@@ -316,11 +306,11 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
         if (dano > 0)
         {
             int HP = Defensor->get_HP() - dano;
-            cout << Atacante->get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+            cout << cor.bluePrint(Atacante->get_nome()) <<" aplicou " << dano << " pontos de dano!" <<endl;
             if (HP <= 0) //Se defensor morreu
             {
                 Defensor->set_HP(0);
-                cout << Defensor->get_nome() << " derrotado." << endl;
+                cout << cor.redPrint(Defensor->get_nome()) << " derrotado." << endl;
                 
                 RealizarMovimentacao(Atacante->get_nome(), Defensor->get_i(), Defensor->get_j());
 
@@ -328,10 +318,16 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
 
                 return true;
             }
+            else{
+                cout<<cor.redPrint(Defensor->get_nome())<<" tem "<<Defensor->get_HP()<<" de HP restante.\n";
+            }
         }
     }
+    else{
+        cout<<cor.bluePrint(Atacante->get_nome())<< " errou o ataque!!\n";
+    }
     //Contra-ataque
-    if (hitD < bonusD - Atacante->Avo() - tA.get_avoid())
+    if (hitD < (bonusD - Atacante->Avo() - tA.get_avoid()))
     {
         int dano;
         if (critD > Atacante->Crit())
@@ -341,11 +337,11 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
         if (dano > 0)
         {
             int HP = Atacante->get_HP() - dano;
-            cout << Defensor->get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+            cout << cor.redPrint(Defensor->get_nome()) <<" aplicou " << dano << " pontos de dano!" <<endl;
             if (HP <= 0) //Se atacante morreu
             {
                 Atacante->set_HP(0);
-                cout << Atacante->get_nome() << " derrotado." << endl;
+                cout << cor.bluePrint(Atacante->get_nome()) << " derrotado." << endl;
                 
                 map.set_ocupacao_terreno(Atacante->get_i(), Atacante->get_j(), 0);
                 map.toggle_ocupado(Atacante->get_i(), Atacante->get_j(), false);
@@ -353,8 +349,13 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
                 _lista_herois.erase(Atacante->get_nome());
                 
                 return true;
+            }else{
+                cout<<cor.bluePrint(Atacante->get_nome())<<" tem "<<Atacante->get_HP()<<" de HP restante.\n";
             }
         }
+    }
+    else{
+        cout << cor.redPrint(Defensor->get_nome())<<" errou o ataque!!\n";
     }
     //Se um personagem tem velocidade maior que o outro, ele ataca novamente
     if (Atacante->get_Spd() - Defensor->get_Spd() >= 4)
@@ -371,12 +372,12 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
             if (dano > 0)
             {
                 int HP = Defensor->get_HP() - dano;
-                cout << Atacante->get_nome() <<" aplicou um double attack!" <<endl;
-                cout << Atacante->get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+                cout << cor.bluePrint(Atacante->get_nome()) <<" aplicou um double attack!" <<endl;
+                cout << cor.bluePrint(Atacante->get_nome()) <<" aplicou " << dano << " pontos de dano!" <<endl;
                 if (HP <= 0) //Se defensor morreu
                 {
                     Defensor->set_HP(0);
-                    cout << Defensor->get_nome() << " derrotado." << endl;
+                    cout << cor.redPrint(Defensor->get_nome()) << " derrotado." << endl;
                     
                     RealizarMovimentacao(Atacante->get_nome(), Defensor->get_i(), Defensor->get_j());
 
@@ -384,6 +385,9 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
                     
                     return true;
                 }
+                else{
+                cout<<cor.redPrint(Defensor->get_nome())<<" tem "<<Defensor->get_HP()<<" de HP restante.\n";
+            }
             }
         }
     }
@@ -404,7 +408,7 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
                 if (HP <= 0) //Se atacante morreu
                 {
                     Atacante->set_HP(0);
-                    cout << Atacante->get_nome() << " derrotado." << endl;
+                    cout << cor.bluePrint(Atacante->get_nome()) << " derrotado." << endl;
 
                     map.set_ocupacao_terreno(Atacante->get_i(), Atacante->get_j(), 0);
                     map.toggle_ocupado(Atacante->get_i(), Atacante->get_j(), false);
@@ -412,7 +416,10 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
                     _lista_herois.erase(Atacante->get_nome());
                    
                     return true;
+                }else{
+                cout<<cor.redPrint(Atacante->get_nome())<<" tem "<<Atacante->get_HP()<<" de HP restante.\n";
                 }
+                
             }
         }
     }
@@ -437,7 +444,7 @@ void CRolePlayingGame::printboard(int _i, int _j)
                 
             }
             else if(tipoOcupacao == 2){
-                cout << cor.redPrint("M");
+                cout << cor.redPrint(getMonstroPorPosicao(uiRow, uiCol)->get_nome().substr(0,1));
             }
         }
         cout << endl;
@@ -480,14 +487,26 @@ void CRolePlayingGame::RealizarMovimentacao(string nomeHeroi, int x, int y) {
     map.toggle_ocupado(x, y, true);
 }
 
+Heroi *CRolePlayingGame::getHeroiPorPosicao(int x, int y)
+{
+    for (std::map<string, Heroi *>::iterator it = this->_lista_herois.begin(); it != this->_lista_herois.end(); it++)
+    {
+        if (it->second->get_i() == x && it->second->get_j() == y)
+            return it->second;
+    }
+    cout<<endl<<"POS(xy): "<<x<<" "<<y<<endl;
+    throw runtime_error("Nenhum Hpersonagem na posição.");
+    return NULL;
+}
+
 Monstro* CRolePlayingGame::getMonstroPorPosicao(int x, int y) {
     for (std::map<string, Monstro *>::iterator it = this->_lista_monstros.begin(); it != this->_lista_monstros.end(); it++)
     {
         if (it->second->get_i() == x && it->second->get_j() == y)
             return it->second;
     }
-
-    throw runtime_error("Nenhum personagem na posição.");
+    cout<<endl<<"POS(xy): "<<x<<" "<<y<<endl;
+    throw runtime_error("Nenhum Mpersonagem na posição.");
     return NULL;   
 }
 
@@ -500,6 +519,17 @@ void CRolePlayingGame::MovimentarMonstros() {
             rng_i = rand() % map.get_num_linhas();
             rng_j = rand() % map.get_num_colunas();
         } while (map.GetMazeSquare(rng_i, rng_j).get_ocupado() == true);
+
+        int xAntigo = _lista_monstros[it->first]->get_i();
+        int yAntigo = _lista_monstros[it->first]->get_j();
         it->second->Move(rng_i, rng_j);
+        map.set_ocupacao_terreno(xAntigo, yAntigo, 0);
+        map.toggle_ocupado(xAntigo, yAntigo, false);
+        map.set_ocupacao_terreno(rng_i, rng_j, 2);
+        map.toggle_ocupado(rng_i, rng_j, true);
     }
+}
+
+void CRolePlayingGame::MoveInv(){
+    cout<<cor.redPrint("\n!!Movimento Invalido!!\n");
 }
