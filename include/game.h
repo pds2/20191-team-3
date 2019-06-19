@@ -39,10 +39,14 @@ class CRolePlayingGame
         Heroi *getHeroiPorPosicao(int x, int y);
         Monstro *getMonstroPorPosicao(int x, int y);
         void printboard(int _i, int _j);
+        // MOVIMENTAÇÃO
         void AtualizarDestinoMovimentacao(int &uiNextRow, int &uiNextCol, char kcDirection);
         void RealizarMovimentacao(string nomeHeroi, int x, int y);
         bool Batalha(string nomeHeroi, int x, int y);
         void MovimentarMonstros();
+        void MoveInv();
+        
+        // ITEM
         void AddArmasPersonagem(Heroi &p);
         void AddArmasPersonagem(Monstro &p);
 };

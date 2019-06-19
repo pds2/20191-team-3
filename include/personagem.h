@@ -79,7 +79,7 @@ public:
 
 	//Impressão de dados na tela
 	void imprime_status() const;
-	void imprime_iventario() const;
+	void imprime_inventario() const;
 	    
     //Função que retorna se o objeto (Monstro ou Heroi) foi eliminado
     bool IsDead();
