@@ -20,7 +20,7 @@ int main()
     // Cria uma variavel de iteração se o jogo acaba ou não
     
     do {
-        map<string, Heroi*> listaPersonagens = qGame.getMapa().get_lista_personagens(true);
+        map<string, Heroi*> listaPersonagens = qGame.get_lista_herois();
         for (std::map<string, Heroi*>::iterator it = listaPersonagens.begin(); it != listaPersonagens.end(); it++){
             int qtdMovimentos = it->second->get_Move();
             for (int i = qtdMovimentos; i > 0; i--) {
@@ -32,19 +32,30 @@ int main()
                     std::cin >> cMove; 
                                             
                 }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
-                if (true/*qGame.MoveHero(cMove, it->first)*/) { //Verifica se o movimento é valido e a iteração do personagem com monstro perto dele
-                    qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
-                    
-                    qGame.AllMonstersDead(); //Se todos os Monstros forem eliminados -> Win
-                    if(qGame.gameOver==1)
-                        break;
-                }else{
-                    i++;
+                if (cMove == 'i' || cMove == 'I')
+                    it->second->imprime_status();
+                else {
+                    int linhaDestino = it->second->get_i();
+                    int colunaDestino = it->second->get_j();
+                    qGame.AtualizarDestinoMovimentacao(linhaDestino, colunaDestino, cMove);
+                    int validacaoMovimentacao = qGame.getMapa().ValidarMovimentacao(linhaDestino, colunaDestino);
+                    if (validacaoMovimentacao == 0) {
+                        qGame.RealizarMovimentacao(it->first, linhaDestino, colunaDestino);
+                    }
+                    else if (validacaoMovimentacao == 2) {
+                        qGame.Batalha(it->first, linhaDestino, colunaDestino);
+                        qGame.AllHeroesisDead(); //Se todos os Heróis forem eliminados -> Game Over
+                        qGame.AllMonstersDead(); //Se todos os Monstros forem eliminados -> Win
+                        if (qGame.gameOver==1)
+                            break;
+                    }
+                    else {
+                        //tratar exceções (movimento inválido)
+                    }
                 }
             }
-            if(qGame.gameOver==1)
-                break;
         }
+        qGame.MovimentarMonstros();
     } while (!qGame.gameOver);
     return 0;
 }

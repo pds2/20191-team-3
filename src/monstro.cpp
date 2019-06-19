@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "heroi.h"
+#include "monstro.h"
 
 
-Heroi:: Heroi() {}
+Monstro:: Monstro() {}
 
-Heroi:: Heroi(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence, bool jogador){}
+Monstro:: Monstro(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence, bool jogador){}
 
 // bool Heroi::Move(){
 // }
@@ -14,7 +14,7 @@ Heroi:: Heroi(string nome, string classe, int HP, int strength, int skill, int s
     
 // }
 
-void Heroi::Move(int x, int y)
+void Monstro::Move(int x, int y)
 {
     this->set_i(x);
     this->set_j(y);
@@ -92,14 +92,4 @@ void Heroi::Move(int x, int y)
     }
     return true;
      */
-}
-
-void Heroi::set_usavel(bool usavel)
-{
-    _usavel = usavel;
-}
-
-bool Heroi::is_usavel() const
-{
-    return _usavel;
 }

@@ -15,7 +15,6 @@ Personagem::Personagem(string nome, string classe, int HP, int strength, int ski
         _classe = classe;
     _hp_Max = HP;
     _hp_Atual = HP;
-    _player = jogador;
     _strengh = strength;
     _skill = skill;
     _speed = speed;
@@ -175,11 +174,6 @@ void Personagem::set_j(int pos_j)
     _pos_j = pos_j;
 }
 
-void Personagem::set_usavel(bool usavel)
-{
-    _usavel = usavel;
-}
-
 int Personagem::get_i() const
 {
     return _pos_i;
@@ -188,11 +182,6 @@ int Personagem::get_i() const
 int Personagem::get_j() const
 {
     return _pos_j;
-}
-
-bool Personagem::is_usavel() const
-{
-    return _usavel;
 }
 
 void Personagem::Add_Arma(Arma arma)
@@ -270,9 +259,4 @@ bool Personagem::IsDead()
     {
         return false;
     }
-}
-
-bool Personagem::isPlayer()
-{
-    return this->_player;
 }

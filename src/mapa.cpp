@@ -29,165 +29,6 @@ Mapa::Mapa(string nome) //Construtor
         }
     }
     map_file.close();
-
-    cria_lista_personagens();
-}
-
-void Mapa::cria_lista_personagens()
-{
-    vector<string> lista1 = {"Eliwood", "Lyn", "Wil", "Hector", "Raven", "Florina", "Dorcas", "Wallace", "Sain", "Erk"};
-    vector<string> lista2 = {"Batta", "Beyard", "Damian", "Glass", "Heintz", "Lundgren", "Migal", "Yogi", "Zagan", "Zugu"};
-    string pasta1 = "Entradas/Personagens/";
-    string pasta2 = "Entradas/Inimigos/";
-    for (unsigned int i = 0; i < lista1.size(); i++)
-    {
-        ifstream infile;
-        infile.open(pasta1 + lista1[i] + ".txt");
-        if (infile.is_open())
-        {
-            string nome, classe;
-            int hp, str, skl, spd, lck, def, res;
-            infile >> nome >> classe >> hp >> str >> skl >> spd >> lck >> def >> res;
-            Heroi *p = new Heroi(nome, classe, hp, str, skl, spd, lck, def, res, true);
-            unsigned int rng_i, rng_j;
-            do
-            {
-                rng_i = rand() % _num_linhas;
-                rng_j = rand() % _num_colunas;
-            } while (_grade[rng_i][rng_j].get_ocupado() == true);
-            p->set_i(rng_i);
-            p->set_j(rng_j);
-            p->set_usavel(true);
-            if (p->get_Classe() == "Mercenary")
-            {
-                Arma a1 = Arma("Iron Sword");
-                Arma a2 = Arma("Steel Sword");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-            }
-            else if (p->get_Classe() == "Lord")
-            {
-                Arma a1 = Arma("Killer Axe");
-                Arma a2 = Arma("Killing Edge");
-                Arma a3 = Arma("Steel Sword");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-                p->Add_Arma(a3);
-            }
-            else if (p->get_Classe() == "General")
-            {
-                Arma a1 = Arma("Steel Lance");
-                Arma a2 = Arma("Iron Axe");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-            }
-            else if (p->get_Classe() == "Pegasus Knight")
-            {
-                Arma a1 = Arma("Steel Lance");
-                Arma a2 = Arma("Killer Lance");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-            }
-            else if (p->get_Classe() == "Paladin")
-            {
-                Arma a1 = Arma("Steel Sword");
-                Arma a2 = Arma("Iron Lance");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-            }
-            else if (p->get_Classe() == "Archer")
-            {
-                Arma a1 = Arma("Iron Bow");
-                Arma a2 = Arma("Steel Bow");
-                Arma a3 = Arma("Killer Bow");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-                p->Add_Arma(a3);
-            }
-            else if (p->get_Classe() == "Mage")
-            {
-                Arma a1 = Arma("Fire");
-                Arma a2 = Arma("Thunder");
-                Arma a3 = Arma("Aura");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-                p->Add_Arma(a3);
-            }
-            else if (p->get_Classe() == "Warrior")
-            {
-                Arma a1 = Arma("Steel Axe");
-                Arma a2 = Arma("Killer Axe");
-                p->Add_Arma(a1);
-                p->Add_Arma(a2);
-            }
-            _lista_personagens.insert(pair<string, Heroi *>(p->get_nome(), p));
-            _grade[p->get_i()][p->get_j()].set_ocupacao(true);
-            _grade[p->get_i()][p->get_j()].set_tipo_ocupacao(1);
-        }
-        infile.close();
-
-        infile.open(pasta2 + lista2[i] + ".txt");
-        if (infile.is_open())
-        {
-            string nome, classe;
-            int hp, str, skl, spd, lck, def, res;
-            infile >> nome >> classe >> hp >> str >> skl >> spd >> lck >> def >> res;
-            Heroi *p = new Heroi(nome, classe, hp, str, skl, spd, lck, def, res, false);
-            unsigned int rng_i, rng_j;
-            do
-            {
-                rng_i = rand() % _num_linhas;
-                rng_j = rand() % _num_colunas;
-            } while (_grade[rng_i][rng_j].get_ocupado() == true);
-            p->set_i(rng_i);
-            p->set_j(rng_j);
-            p->set_usavel(true);
-            if (p->get_Classe() == "Mercenary")
-            {
-                Arma a = Arma("Iron Sword");
-                p->Add_Arma(a);
-            }
-            else if (p->get_Classe() == "Lord")
-            {
-                Arma a = Arma("Steel Sword");
-                p->Add_Arma(a);
-            }
-            else if (p->get_Classe() == "General")
-            {
-                Arma a = Arma("Steel Lance");
-                p->Add_Arma(a);
-            }
-            else if (p->get_Classe() == "Pegasus Knight")
-            {
-                Arma a = Arma("Steel Lance");
-                p->Add_Arma(a);
-            }
-            else if (p->get_Classe() == "Paladin")
-            {
-                Arma a = Arma("Steel Sword");
-                p->Add_Arma(a);
-            }
-            else if (p->get_Classe() == "Archer")
-            {
-                Arma a = Arma("Iron Bow");
-                p->Add_Arma(a);
-            }
-            else if (p->get_Classe() == "Mage")
-            {
-                Arma a = Arma("Fire");
-                p->Add_Arma(a);
-            }
-            else if (p->get_Classe() == "Warrior")
-            {
-                Arma a = Arma("Steel Axe");
-                p->Add_Arma(a);
-            }
-            _lista_personagens.insert(pair<string, Heroi *>(p->get_nome(), p));
-            _grade[p->get_i()][p->get_j()].set_ocupacao(true);
-            _grade[p->get_i()][p->get_j()].set_tipo_ocupacao(2);
-        }
-        infile.close();
-    }
 }
 
 void Mapa::imprime()
@@ -198,16 +39,6 @@ void Mapa::imprime()
             cout << _grade[i][j].get_nome() << ' ';
         cout << endl;
     }
-}
-
-void Mapa::imprime_personagem(string nome)
-{
-    _lista_personagens[nome]->imprime_status();
-}
-
-Heroi Mapa::get_personagem(string nome)
-{
-    return *_lista_personagens[nome];
 }
 
 int Mapa::get_num_colunas()
@@ -225,204 +56,204 @@ Terreno Mapa::GetMazeSquare(unsigned int uiRow, unsigned int uiCol)
     return _grade[uiRow][uiCol];
 }
 
-map<string, Heroi *> Mapa::get_lista_personagens()
-{
-    return this->_lista_personagens;
-}
+// map<string, Heroi *> Mapa::get_lista_personagens()
+// {
+//     return this->_lista_personagens;
+// }
 
-map<string, Heroi *> Mapa::get_lista_personagens(bool heroi)
-{
-    std::map<string, Heroi *> personagensAux;
+// map<string, Heroi *> Mapa::get_lista_personagens(bool heroi)
+// {
+//     std::map<string, Heroi *> personagensAux;
 
-    for (std::map<string, Heroi *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
-    {
-        if (it->second->isPlayer() == heroi)
-            personagensAux.insert(make_pair(it->first, it->second));
-    }
+//     for (std::map<string, Heroi *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
+//     {
+//         if (it->second->isPlayer() == heroi)
+//             personagensAux.insert(make_pair(it->first, it->second));
+//     }
 
-    return personagensAux;
-}
+//     return personagensAux;
+// }
 
-Heroi *Mapa::getHeroiPorPosicao(int x, int y)
-{
-    for (std::map<string, Heroi *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
-    {
-        if (it->second->get_i() == x && it->second->get_j() == y)
-            return it->second;
-    }
+// Heroi *Mapa::getHeroiPorPosicao(int x, int y)
+// {
+//     for (std::map<string, Heroi *>::iterator it = this->_lista_personagens.begin(); it != this->_lista_personagens.end(); it++)
+//     {
+//         if (it->second->get_i() == x && it->second->get_j() == y)
+//             return it->second;
+//     }
 
-    throw runtime_error("Nenhum personagem na posição.");
-    return NULL;
-}
+//     throw runtime_error("Nenhum personagem na posição.");
+//     return NULL;
+// }
 
-bool Mapa::Batalha(Heroi &Atacante, Heroi &Defensor)
-{
-    //Gera quatro números aleatótios de 0 a 99
-    //Valores de hit e crit do atacante
-    int hitA = rand() % 100;
-    int critA = rand() % 100;
+// bool Mapa::Batalha(Heroi &Atacante, Monstro &Defensor)
+// {
+//     //Gera quatro números aleatótios de 0 a 99
+//     //Valores de hit e crit do atacante
+//     int hitA = rand() % 100;
+//     int critA = rand() % 100;
 
-    //Valores de hit e crit do defensor
-    int hitD = rand() % 100;
-    int critD = rand() % 100;
+//     //Valores de hit e crit do defensor
+//     int hitD = rand() % 100;
+//     int critD = rand() % 100;
 
-    //Valores de terreno
-    Terreno tA = GetMazeSquare(Atacante.get_i(), Atacante.get_j());
-    Terreno tD = GetMazeSquare(Defensor.get_i(), Defensor.get_j());
+//     //Valores de terreno
+//     Terreno tA = GetMazeSquare(Atacante.get_i(), Atacante.get_j());
+//     Terreno tD = GetMazeSquare(Defensor.get_i(), Defensor.get_j());
 
-    //Se ambos são do mesmo time
-    if (Atacante.isPlayer() == Defensor.isPlayer())
-        return false;
+//     //Se ambos são do mesmo time
+//     if (Atacante.isPlayer() == Defensor.isPlayer())
+//         return false;
 
-    //Bonus de triângulo de armas (Sword > Axe > Lance > Sword)
-    srand(time(NULL));
-    int bonusA = Atacante.Hit();
-    int bonusD = Defensor.Hit();
-    string tipo_arma_A = Atacante.Arma_Equipada().get_tipo();
-    string tipo_arma_D = Defensor.Arma_Equipada().get_tipo();
-    if ((tipo_arma_A == "Sword" && tipo_arma_D == "Axe") || (tipo_arma_A == "Lance" && tipo_arma_D == "Sword") || (tipo_arma_A == "Axe" && tipo_arma_D == "Lance"))
-    {
-        bonusA += 4;
-    }
-    else if ((tipo_arma_D == "Sword" && tipo_arma_A == "Axe") || (tipo_arma_D == "Lance" && tipo_arma_A == "Sword") || (tipo_arma_D == "Axe" && tipo_arma_A == "Lance"))
-    {
-        bonusD += 4;
-    }
+//     //Bonus de triângulo de armas (Sword > Axe > Lance > Sword)
+//     srand(time(NULL));
+//     int bonusA = Atacante.Hit();
+//     int bonusD = Defensor.Hit();
+//     string tipo_arma_A = Atacante.Arma_Equipada().get_tipo();
+//     string tipo_arma_D = Defensor.Arma_Equipada().get_tipo();
+//     if ((tipo_arma_A == "Sword" && tipo_arma_D == "Axe") || (tipo_arma_A == "Lance" && tipo_arma_D == "Sword") || (tipo_arma_A == "Axe" && tipo_arma_D == "Lance"))
+//     {
+//         bonusA += 4;
+//     }
+//     else if ((tipo_arma_D == "Sword" && tipo_arma_A == "Axe") || (tipo_arma_D == "Lance" && tipo_arma_A == "Sword") || (tipo_arma_D == "Axe" && tipo_arma_A == "Lance"))
+//     {
+//         bonusD += 4;
+//     }
 
-    int defesaA, defesaD;
-    if (Atacante.Arma_Equipada().get_tipo() == "Tome")
-        defesaD = Defensor.get_Res();
-    else
-        defesaD = Defensor.get_Def();
+//     int defesaA, defesaD;
+//     if (Atacante.Arma_Equipada().get_tipo() == "Tome")
+//         defesaD = Defensor.get_Res();
+//     else
+//         defesaD = Defensor.get_Def();
 
-    if (Defensor.Arma_Equipada().get_tipo() == "Tome")
-        defesaA = Atacante.get_Res();
-    else
-        defesaA = Atacante.get_Def();
+//     if (Defensor.Arma_Equipada().get_tipo() == "Tome")
+//         defesaA = Atacante.get_Res();
+//     else
+//         defesaA = Atacante.get_Def();
 
-    //Primeiro ataque
-    if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
-    {
-        int dano;
-        if (critA > Atacante.Crit())
-            dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 3;
-        else
-            dano = Atacante.Atk() - defesaD - tD.get_defense();
-        if (dano > 0)
-        {
-            int HP = Defensor.get_HP() - dano;
-            cout << Atacante.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
-            if (HP <= 0) //Se defensor morreu
-            {
-                Defensor.set_HP(0);
-                cout << Defensor.get_nome() << " derrotado." << endl;
+//     //Primeiro ataque
+//     if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
+//     {
+//         int dano;
+//         if (critA > Atacante.Crit())
+//             dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 3;
+//         else
+//             dano = Atacante.Atk() - defesaD - tD.get_defense();
+//         if (dano > 0)
+//         {
+//             int HP = Defensor.get_HP() - dano;
+//             cout << Atacante.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+//             if (HP <= 0) //Se defensor morreu
+//             {
+//                 Defensor.set_HP(0);
+//                 cout << Defensor.get_nome() << " derrotado." << endl;
                 
-                _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
-                _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
+//                 _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
+//                 _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
-                _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(true);
-                _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(1);
+//                 _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(true);
+//                 _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(1);
 
-                _lista_personagens.erase(Defensor.get_nome());
+//                 _lista_personagens.erase(Defensor.get_nome());
 
-                return true;
-            }
-        }
-    }
-    //Contra-ataque
-    if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
-    {
-        int dano;
-        if (critD > Atacante.Crit())
-            dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 2;
-        else
-            dano = Defensor.Atk() - defesaA - tA.get_defense();
-        if (dano > 0)
-        {
-            int HP = Atacante.get_HP() - dano;
-            cout << Defensor.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
-            if (HP <= 0) //Se atacante morreu
-            {
-                Atacante.set_HP(0);
-                cout << Atacante.get_nome() << " derrotado." << endl;
+//                 return true;
+//             }
+//         }
+//     }
+//     //Contra-ataque
+//     if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
+//     {
+//         int dano;
+//         if (critD > Atacante.Crit())
+//             dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 2;
+//         else
+//             dano = Defensor.Atk() - defesaA - tA.get_defense();
+//         if (dano > 0)
+//         {
+//             int HP = Atacante.get_HP() - dano;
+//             cout << Defensor.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+//             if (HP <= 0) //Se atacante morreu
+//             {
+//                 Atacante.set_HP(0);
+//                 cout << Atacante.get_nome() << " derrotado." << endl;
                 
                 
-                _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
-                _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
+//                 _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
+//                 _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
-                _lista_personagens.erase(Atacante.get_nome());
+//                 _lista_personagens.erase(Atacante.get_nome());
                 
-                return true;
-            }
-        }
-    }
-    //Se um personagem tem velocidade maior que o outro, ele ataca novamente
-    if (Atacante.get_Spd() - Defensor.get_Spd() >= 4)
-    {
-        hitA = rand() % 100;
-        critA = rand() % 100;
-        if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
-        {
-            int dano;
-            if (critA > Atacante.Crit())
-                dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 2;
-            else
-                dano = Atacante.Atk() - defesaD - tD.get_defense();
-            if (dano > 0)
-            {
-                int HP = Defensor.get_HP() - dano;
-                cout << Atacante.get_nome() <<" aplicou um double attack!" <<endl;
-                cout << Atacante.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
-                if (HP <= 0) //Se defensor morreu
-                {
-                    Defensor.set_HP(0);
-                    cout << Defensor.get_nome() << " derrotado." << endl;
+//                 return true;
+//             }
+//         }
+//     }
+//     //Se um personagem tem velocidade maior que o outro, ele ataca novamente
+//     if (Atacante.get_Spd() - Defensor.get_Spd() >= 4)
+//     {
+//         hitA = rand() % 100;
+//         critA = rand() % 100;
+//         if (hitA < bonusA - Defensor.Avo() - tD.get_avoid())
+//         {
+//             int dano;
+//             if (critA > Atacante.Crit())
+//                 dano = (Atacante.Atk() - defesaD - tD.get_defense()) * 2;
+//             else
+//                 dano = Atacante.Atk() - defesaD - tD.get_defense();
+//             if (dano > 0)
+//             {
+//                 int HP = Defensor.get_HP() - dano;
+//                 cout << Atacante.get_nome() <<" aplicou um double attack!" <<endl;
+//                 cout << Atacante.get_nome() <<" aplicou " << dano << " pontos de dano!" <<endl;
+//                 if (HP <= 0) //Se defensor morreu
+//                 {
+//                     Defensor.set_HP(0);
+//                     cout << Defensor.get_nome() << " derrotado." << endl;
                     
                     
-                    _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
-                    _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
+//                     _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
+//                     _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
-                    _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(true);
-                    _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(1);
+//                     _grade[Defensor.get_i()][Defensor.get_j()].set_ocupacao(true);
+//                     _grade[Defensor.get_i()][Defensor.get_j()].set_tipo_ocupacao(1);
 
-                    _lista_personagens.erase(Defensor.get_nome());
+//                     _lista_personagens.erase(Defensor.get_nome());
                     
-                    return true;
-                }
-            }
-        }
-    }
-    else if (Defensor.get_Spd() - Atacante.get_Spd() >= 4)
-    {
-        hitD = rand() % 100;
-        critD = rand() % 100;
-        if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
-        {
-            int dano;
-            if (critD > Atacante.Crit())
-                dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 3;
-            else
-                dano = Defensor.Atk() - defesaA - tA.get_defense();
-            if (dano > 0)
-            {
-                int HP = Atacante.get_HP() - dano;
-                if (HP <= 0) //Se atacante morreu
-                {
-                    Atacante.set_HP(0);
-                    cout << Atacante.get_nome() << " derrotado." << endl;
+//                     return true;
+//                 }
+//             }
+//         }
+//     }
+//     else if (Defensor.get_Spd() - Atacante.get_Spd() >= 4)
+//     {
+//         hitD = rand() % 100;
+//         critD = rand() % 100;
+//         if (hitD < bonusD - Atacante.Avo() - tA.get_avoid())
+//         {
+//             int dano;
+//             if (critD > Atacante.Crit())
+//                 dano = (Defensor.Atk() - defesaA - tA.get_defense()) * 3;
+//             else
+//                 dano = Defensor.Atk() - defesaA - tA.get_defense();
+//             if (dano > 0)
+//             {
+//                 int HP = Atacante.get_HP() - dano;
+//                 if (HP <= 0) //Se atacante morreu
+//                 {
+//                     Atacante.set_HP(0);
+//                     cout << Atacante.get_nome() << " derrotado." << endl;
 
-                    _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
-                    _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
+//                     _grade[Atacante.get_i()][Atacante.get_j()].set_ocupacao(false);
+//                     _grade[Atacante.get_i()][Atacante.get_j()].set_tipo_ocupacao(0);
 
-                    _lista_personagens.erase(Atacante.get_nome());
+//                     _lista_personagens.erase(Atacante.get_nome());
                    
-                    return true;
-                }
-            }
-        }
-    }
-    return false; //Se ninguém morreu
-}
+//                     return true;
+//                 }
+//             }
+//         }
+//     }
+//     return false; //Se ninguém morreu
+// }
 
 void Mapa::set_ocupacao_terreno(int x, int y, int tipoOcupacao)
 {
@@ -434,8 +265,15 @@ void Mapa::toggle_ocupado(int x, int y, bool ocupado)
     this->_grade[x][y].set_ocupacao(ocupado);
 }
 
-void Mapa::setPosHeroi(string nome, int x, int y)
-{
-    this->_lista_personagens[nome]->set_i(x);
-    this->_lista_personagens[nome]->set_j(y);
+// void Mapa::setPosHeroi(string nome, int x, int y)
+// {
+//     this->_lista_personagens[nome]->set_i(x);
+//     this->_lista_personagens[nome]->set_j(y);
+// }
+int Mapa::ValidarMovimentacao(int x, int y) {
+    if (x > get_num_linhas() || y > get_num_colunas())
+        return NULL;
+
+    int tipoOcupacao = GetMazeSquare(x, y).get_tipo_ocupado();
+    return tipoOcupacao == 1 ? NULL : tipoOcupacao;
 }

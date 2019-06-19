@@ -8,12 +8,17 @@
 #include "personagem.h"
 
 class Heroi : public Personagem {
+    private:
+    	bool _usavel; //Define se pode ser utilizado no turno
+
     public:
         Heroi();
         Heroi(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence, bool jogador);
-        bool Move() override;
-        bool Move(char const kcDirection, Mapa map);
+        // bool Move() override;
+        void Move(int x, int y) override;
         void setHeroi();
+    	void set_usavel(bool usavel);
+    	bool is_usavel() const;
 };
 
 #endif
