@@ -8,13 +8,12 @@
 
 #include "healingitem.h"
 #include "arma.h"
-#include "mapa.h"
 
 using namespace std;
 
 class Personagem
 {
-private:
+protected:
 	string _nome;   //Nome do personagem
 	string _classe; //Classe de batalha
 

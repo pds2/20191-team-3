@@ -14,8 +14,7 @@ class Heroi : public Personagem {
     public:
         Heroi();
         Heroi(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence, bool jogador);
-        // bool Move() override;
-        void Move(int x, int y) override;
+        void Move(int x, int y);
         void setHeroi();
     	void set_usavel(bool usavel);
     	bool is_usavel() const;

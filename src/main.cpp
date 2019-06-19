@@ -32,8 +32,10 @@ int main()
                     std::cin >> cMove; 
                                             
                 }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i');
-                if (cMove == 'i' || cMove == 'I')
+                if (cMove == 'i' || cMove == 'I') {
                     it->second->imprime_status();
+                    i++;
+                }
                 else {
                     int linhaDestino = it->second->get_i();
                     int colunaDestino = it->second->get_j();

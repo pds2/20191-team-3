@@ -271,9 +271,9 @@ void Mapa::toggle_ocupado(int x, int y, bool ocupado)
 //     this->_lista_personagens[nome]->set_j(y);
 // }
 int Mapa::ValidarMovimentacao(int x, int y) {
-    if (x > get_num_linhas() || y > get_num_colunas())
-        return NULL;
+    if (x >= get_num_linhas() || y >= get_num_colunas() || x < 0 || y < 0)
+        return -1;
 
     int tipoOcupacao = GetMazeSquare(x, y).get_tipo_ocupado();
-    return tipoOcupacao == 1 ? NULL : tipoOcupacao;
+    return tipoOcupacao == 1 ? -1 : tipoOcupacao;
 }

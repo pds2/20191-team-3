@@ -48,7 +48,6 @@ void CRolePlayingGame::CriarListaHerois(bool heroi) {
                 rng_i = rand() % map.get_num_linhas();
                 rng_j = rand() % map.get_num_colunas();
             } while (map.GetMazeSquare(rng_i, rng_j).get_ocupado() == true);
-
             if (heroi) {
                 Heroi *p = new Heroi(nome, classe, hp, str, skl, spd, lck, def, res, true);
                 p->set_i(rng_i);
@@ -65,7 +64,7 @@ void CRolePlayingGame::CriarListaHerois(bool heroi) {
                 _lista_monstros.insert(pair<string, Monstro *>(p->get_nome(), p));
             }
             
-            map.set_ocupacao_terreno(rng_i, rng_j, 1);
+            map.set_ocupacao_terreno(rng_i, rng_j, heroi ? 1 : 2);
             map.toggle_ocupado(rng_i, rng_j, true);
         }
         infile.close();
@@ -323,11 +322,7 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
                 Defensor->set_HP(0);
                 cout << Defensor->get_nome() << " derrotado." << endl;
                 
-                map.set_ocupacao_terreno(Atacante->get_i(), Atacante->get_j(), 0);
-                map.toggle_ocupado(Atacante->get_i(), Atacante->get_j(), false);
-
-                map.set_ocupacao_terreno(Defensor->get_i(), Defensor->get_j(), 1);
-                map.toggle_ocupado(Defensor->get_i(), Defensor->get_j(), true);
+                RealizarMovimentacao(Atacante->get_nome(), Defensor->get_i(), Defensor->get_j());
 
                 _lista_monstros.erase(Defensor->get_nome());
 
@@ -383,11 +378,7 @@ bool CRolePlayingGame::Batalha(string nomeHeroi, int x, int y)
                     Defensor->set_HP(0);
                     cout << Defensor->get_nome() << " derrotado." << endl;
                     
-                    map.set_ocupacao_terreno(Atacante->get_i(), Atacante->get_j(), 0);
-                    map.toggle_ocupado(Atacante->get_i(), Atacante->get_j(), false);
-
-                    map.set_ocupacao_terreno(Defensor->get_i(), Defensor->get_j(), 1);
-                    map.toggle_ocupado(Defensor->get_i(), Defensor->get_j(), true);
+                    RealizarMovimentacao(Atacante->get_nome(), Defensor->get_i(), Defensor->get_j());
 
                     _lista_monstros.erase(Defensor->get_nome());
                     
