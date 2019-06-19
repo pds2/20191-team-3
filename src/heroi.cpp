@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "heroi.h"
+#include "personagem.h"
 
 
 Heroi:: Heroi() {}
@@ -14,7 +15,7 @@ Heroi:: Heroi(string nome, string classe, int HP, int strength, int skill, int s
     
 // }
 
-void Heroi::Move(int x, int y)
+void Heroi::Move(int x, int y) __override
 {
     this->set_i(x);
     this->set_j(y);

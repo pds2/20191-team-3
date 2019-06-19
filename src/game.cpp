@@ -72,7 +72,7 @@ void CRolePlayingGame::CriarListaHerois(bool heroi) {
     }
 }
 
-void AddArmasPersonagem(Heroi &p) {
+void CRolePlayingGame::AddArmasPersonagem(Heroi &p) {
     if (p.get_Classe() == "Mercenary")
             {
                 Arma a1 = Arma("Iron Sword");
@@ -137,7 +137,7 @@ void AddArmasPersonagem(Heroi &p) {
             }
 }
 
-void AddArmasPersonagem(Monstro &p) {
+void CRolePlayingGame::AddArmasPersonagem(Monstro &p) {
     if (p.get_Classe() == "Mercenary")
             {
                 Arma a = Arma("Iron Sword");

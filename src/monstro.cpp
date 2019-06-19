@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "monstro.h"
-
+#include "personagem.h"
 
 Monstro:: Monstro() {}
 

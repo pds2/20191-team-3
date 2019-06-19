@@ -43,4 +43,6 @@ class CRolePlayingGame
         void RealizarMovimentacao(string nomeHeroi, int x, int y);
         bool Batalha(string nomeHeroi, int x, int y);
         void MovimentarMonstros();
+        void AddArmasPersonagem(Heroi &p);
+        void AddArmasPersonagem(Monstro &p);
 };
