@@ -68,3 +68,12 @@ bin/main
 .vscode/ipch/765ad8478f8efa8a/TESTES.ipch
 .vscode/ipch/4f3ba8ef61a1fef7/mmap_address.bin
 .vscode/ipch/41d63d104eefc598/mmap_address.bin
+build/arma.o
+build/terreno.o
+build/personagem.o
+build/monstro.o
+build/mapa.o
+build/heroi.o
+build/healingitem.o
+build/game.o
+build/color.o
