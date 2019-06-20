@@ -15,7 +15,6 @@ Personagem::Personagem(string nome, string classe, int HP, int strength, int ski
         _classe = classe;
     _hp_Max = HP;
     _hp_Atual = HP;
-    _player = jogador;
     _strengh = strength;
     _skill = skill;
     _speed = speed;
@@ -175,11 +174,6 @@ void Personagem::set_j(int pos_j)
     _pos_j = pos_j;
 }
 
-void Personagem::set_usavel(bool usavel)
-{
-    _usavel = usavel;
-}
-
 int Personagem::get_i() const
 {
     return _pos_i;
@@ -188,11 +182,6 @@ int Personagem::get_i() const
 int Personagem::get_j() const
 {
     return _pos_j;
-}
-
-bool Personagem::is_usavel() const
-{
-    return _usavel;
 }
 
 void Personagem::Add_Arma(Arma arma)
@@ -251,8 +240,9 @@ void Personagem::imprime_status() const
          << "Def: " << get_Def() << " Res: " << get_Res() << endl;
 }
 
-void Personagem::imprime_iventario() const
+void Personagem::imprime_inventario() const
 {
+    cout<<"Equipado: "<<Arma_Equipada().get_nome() << endl;
     for (unsigned int i = 0; i < _iventario_arma.size(); i++)
         cout << _iventario_arma[i].get_nome() << endl;
     cout << "Potion" << endl
@@ -270,9 +260,4 @@ bool Personagem::IsDead()
     {
         return false;
     }
-}
-
-bool Personagem::isPlayer()
-{
-    return this->_player;
 }

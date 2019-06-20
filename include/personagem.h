@@ -13,7 +13,7 @@ using namespace std;
 
 class Personagem
 {
-private:
+protected:
 	string _nome;   //Nome do personagem
 	string _classe; //Classe de batalha
 
@@ -32,17 +32,17 @@ private:
 	int _armaequipada;					 //Posição da arma equipada no iventário
 	vector<Arma> _iventario_arma;		 //Iventário de Armas, Max 3
 	vector<HealingItem> _iventario_item; //Iventário de Itens, Max 2
-	bool _player;						 //Define se é player ou não
+	// bool _player;						 //Define se é player ou não
 
 	//Parametros de localizacao no mapa
 	int _pos_i;
 	int _pos_j;
-	bool _usavel; //Define se pode ser utilizado no turno
-
 public:
 	//Construtor
 	Personagem(string nome, string classe, int HP, int strength, int skill, int speed, int luck, int defense, int resistence, bool jogador);
 	Personagem();
+
+	virtual void Move(int x, int y) = 0; // Move o personagem no mapa respeitando as condições
 
 	//Conjunto de métodos get para os atributos
 	char get_Nome();
@@ -73,19 +73,16 @@ public:
 	//Parametros de localizacao no mapa
 	void set_i(int pos_i);
 	void set_j(int pos_j);
-	void set_usavel(bool usavel);
 
 	int get_i() const;
 	int get_j() const;
-	bool is_usavel() const;
 
 	//Impressão de dados na tela
 	void imprime_status() const;
-	void imprime_iventario() const;
+	void imprime_inventario() const;
 	    
     //Função que retorna se o objeto (Monstro ou Heroi) foi eliminado
     bool IsDead();
-	bool isPlayer();
 };
 
 #endif
