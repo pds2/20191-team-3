@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 
 #include "game.h"
 #include "color.h"
@@ -7,7 +8,7 @@
 /* Cria o programa principal que chama as várias classes 
 e funções e interage com o utilizador . Aqui controla vários aspectos do jogo */
 
-using namespace std;  //Limpar o dungeon
+using namespace std; 
 
 int main()
 {
@@ -30,7 +31,7 @@ int main()
                     cout <<" "<< i <<" movimentos restantes!\n"; // Pega a entrada do usuário
                     qGame.printboard(it->second->get_i(), it->second->get_j()); //Printa o mapa na tela
                     std::cin >> cMove; 
-                                            
+                    system("clear");                        
                 }while(cMove != 'w' && cMove != 'a' && cMove != 's' && cMove != 'd' && cMove != 'i' && cMove != 'p');
                 if (cMove == 'i' || cMove == 'I' || cMove == 'p' || cMove == 'P') {
                     if(cMove == 'p' || cMove == 'P'){

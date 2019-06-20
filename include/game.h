@@ -12,10 +12,7 @@
 #include "color.h"
 #include <exception>
 
-/*Esta classe controla o movimento do seu herói. 
-Você usa "W ", "A", "S" e "Z" para mover o seu personagem . 
-Ele também gera 5 monstros e seu herói dentro de sua " Dungeon (Masmorra) " e controla as interações 
-entre eles , como mortes e posições.*/
+/*Esta classe é a Engine do game contém os metodos para funcionamento do game.*/
 
 class CRolePlayingGame
 {
@@ -27,12 +24,9 @@ class CRolePlayingGame
         void CriarListaHerois(bool heroi);
     public:
         bool gameOver;
-        CRolePlayingGame();   
-        //int QueryLocation(unsigned int uiRow, unsigned int uiCol); // Retorna na matriz de terrenos o tipo de ocupação da posição desejada
-        //void printboard(int _i, int _j); // Printa os valores retonado por QueryLocation() 
+        CRolePlayingGame();    
         void AllMonstersDead(); // Verifica se todos os monstros ja foram derrotados 
         void AllHeroesisDead();
-       // bool TerrenoComparator(Terreno &terreno1, Terreno &terreno2); // Compara as classes terreno para ver se estao ocupadas
         Mapa getMapa();
 	    std::map<string, Heroi*> get_lista_herois();
         std::map<string, Monstro*> get_lista_monstros();
